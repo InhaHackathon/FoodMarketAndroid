@@ -64,27 +64,6 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
-    // Splash Screen
-    implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
-
-    // Retrofit 라이브러리
-    def retrofit_version = "2.9.0"
-    implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
-
-    // Gson
-    implementation "com.squareup.retrofit2:converter-gson:${retrofit_version}"
-
-    // Scalars 변환기 라이브러리
-    implementation "com.squareup.retrofit2:converter-scalars:${retrofit_version}"
-
-    // 레트로핏 로깅 인터셉터
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation "com.squareup.retrofit2:adapter-rxjava:${retrofit_version}"
-    implementation 'com.google.code.gson:gson:2.8.6'
-
-    // google Login
-    implementation "com.google.android.gms:play-services-auth:20.5.0"
-
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
