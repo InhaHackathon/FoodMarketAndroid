@@ -1,5 +1,7 @@
 package com.dongminpark.foodmarketandroid.Navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -87,6 +89,7 @@ fun BottomNavigation(navController: NavHostController) {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainScreenView(startDestination: String) {
     val navController = rememberNavController()
@@ -105,12 +108,19 @@ fun MainScreenView(startDestination: String) {
                 composable(MainNavigationScreens.Detail.route) { DetailScreen(navController = navController, "main") }
                 composable(MainNavigationScreens.Profile.route) { ProfileScreen(navController = navController, "main")}
 
-                // Community
+                // Chatting
                 composable(ChattingNavigationScreens.Chatting.route) {
                     ChattingScreen(
                         navController = navController
                     )
                 }
+
+                composable(ChattingNavigationScreens.ChattingDetail.route) {
+                    ChattingDetailScreen(
+                        navController = navController
+                    )
+                }
+
 /*
                 composable(
                     route = "${CommunityNavigationScreens.Follow.route}/{variable}",
@@ -147,9 +157,6 @@ fun MainScreenView(startDestination: String) {
                     MyListScreen(navController = navController, title = variable!!)
                 }
 
-                composable(MyNavigationScreens.MyList.route) {
-                    //
-                }
                 composable(MyNavigationScreens.MyDetail.route) {
                     DetailScreen(navController = navController, "my")
                 }

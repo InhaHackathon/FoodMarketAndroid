@@ -39,6 +39,7 @@ sealed class MainNavigationScreens(val route: String) {
 
 sealed class ChattingNavigationScreens(val route: String) {
     object Chatting : ChattingNavigationScreens("chatting")
+    object ChattingDetail : ChattingNavigationScreens("chatting_detail_screen")
 }
 
 sealed class FoodBankNavigationScreens(val route: String) {
