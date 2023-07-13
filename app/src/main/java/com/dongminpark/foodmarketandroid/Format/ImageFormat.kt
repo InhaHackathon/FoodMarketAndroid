@@ -29,7 +29,7 @@ fun ImageFormat(url: String, size: Int = 100) {
     Image(
         contentScale = ContentScale.FillBounds,
         modifier = Modifier
-            .clip(RoundedCornerShape(0.dp))
+            .clip(RoundedCornerShape(4.dp))
             .size(size.dp)
             .aspectRatio(1f),
         painter = painter,

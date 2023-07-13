@@ -1,26 +1,40 @@
 package com.dongminpark.foodmarketandroid.Screens
 
+import android.net.Uri
 import android.os.Build
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dongminpark.foodmarketandroid.Format.ImageFormat
-import com.dongminpark.foodmarketandroid.Format.ItemFormat
+import com.dongminpark.foodmarketandroid.Format.*
+import com.dongminpark.foodmarketandroid.R
 import com.dongminpark.foodmarketandroid.Utils.Constant.Companion.outlinePadding
+import com.dongminpark.foodmarketandroid.Utils.Constants.TAG
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -28,65 +42,50 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun MainScreen(navController: NavController) {
     var WriteShowDialog by remember { mutableStateOf(false) }
-    var isTextFieldFocused = false
 
     if (WriteShowDialog) {
+        // 각각 텍스트 변수들을 밖으로 빼서 어쩌구... 할 생각
         AlertDialog(
-            onDismissRequest = { WriteShowDialog = false },
+            modifier = Modifier.fillMaxHeight(0.95f),
+            shape = RoundedCornerShape(24.dp),
+            onDismissRequest = { },
             title = { Text("게시글 작성") },
             text = {
                 LazyColumn(){
                     item {
-                        val focusRequester by remember { mutableStateOf(FocusRequester()) }
                         var text by remember { mutableStateOf("") }
 
-                        Text(text = "상품 이름")
-                        TextField(
-                            value = text,
-                            onValueChange = {
-                                text = it
-                            },
-                            modifier = Modifier
-                                .focusRequester(focusRequester = focusRequester)
-                                .onFocusChanged {
-                                    isTextFieldFocused = it.isFocused
-                                },
-                            maxLines = 1,
-                            singleLine = true
-                        )
+                        TextFormat(string = "상품 이름")
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        TextFieldFormat(text = text) {
+                            text = it
+                        }
+                        Spacer(modifier = Modifier.padding(8.dp))
                     }
                     item {
-                        val focusRequester by remember { mutableStateOf(FocusRequester()) }
                         var text by remember { mutableStateOf("") }
 
-                        Text(text = "가격")
-                        TextField(
-                            value = text,
-                            onValueChange = { newText ->
-                                // 숫자만 입력 받도록 처리
-                                if (newText.all { it.isDigit() }) {
-                                    text = newText
-                                }
-                            },
-                            modifier = Modifier
-                                .focusRequester(focusRequester = focusRequester)
-                                .onFocusChanged {
-                                    isTextFieldFocused = it.isFocused
-                                },
+                        TextFormat(string = "가격")
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        TextFieldFormat(
                             keyboardOptions = KeyboardOptions.Default.copy(
                                 keyboardType = KeyboardType.Number,
                                 imeAction = androidx.compose.ui.text.input.ImeAction.Done
                             ),
-                            maxLines = 1,
-                            singleLine = true
-                        )
+                            text = text
+                        ){newText ->
+                            if (newText.all { it.isDigit() }) {
+                                text = newText
+                            }
+                        }
+                        Spacer(modifier = Modifier.padding(8.dp))
                     }
                     item {
                         var expanded by remember { mutableStateOf(false) }
                         var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
                         Column {
-                            Text(text = "유통기한")
+                            TextFormat(string = "유통기한")
                             Button(
                                 onClick = { expanded = !expanded },
                                 modifier = Modifier.fillMaxWidth()
@@ -124,27 +123,47 @@ fun MainScreen(navController: NavController) {
                                 }
                             }
                         }
+                        Spacer(modifier = Modifier.padding(8.dp))
                     }
                     item {
-                        val focusRequester by remember { mutableStateOf(FocusRequester()) }
                         var text by remember { mutableStateOf("") }
 
-                        Text(text = "상세 설명 (150자 제한)")
-                        TextField(
-                            value = text,
-                            onValueChange = {
-                                if (it.length < 150)
-                                    text = it
-                            },
-                            modifier = Modifier
-                                .focusRequester(focusRequester = focusRequester)
-                                .onFocusChanged {
-                                    isTextFieldFocused = it.isFocused
-                                }
-                        )
+                        TextFormat(string = "상세 설명 (150자 제한)")
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        TextFieldFormat(text = text, isSingle = false) {
+                            if (it.length < 150)
+                                text = it
+                        }
+                        Spacer(modifier = Modifier.padding(8.dp))
                     }
                     item {
-                        Text(text = "사진")
+                        val selectedPhotos = remember { mutableStateListOf<Uri>() }
+
+                        val requestMultipleImages = rememberLauncherForActivityResult(
+                            contract = ActivityResultContracts.GetMultipleContents()
+                        ) { uris: List<Uri>? ->
+                            uris?.let {
+                                selectedPhotos.addAll(it)
+                            }
+                        }
+                        
+                        LazyRow() {
+                            itemsIndexed(selectedPhotos) { index, item ->
+                                Box(contentAlignment = Alignment.TopEnd){
+                                    ImageFormat(url = item.toString())
+                                    Icon(
+                                        imageVector = Icons.Filled.Delete,
+                                        contentDescription = "delete",
+                                        modifier = Modifier.clickable {
+                                            selectedPhotos.remove(item)
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                        Button(onClick = { requestMultipleImages.launch("image/*") }) {
+                            TextFormat(string = "사진 업로드")
+                        }
                     }
                 }
                    },

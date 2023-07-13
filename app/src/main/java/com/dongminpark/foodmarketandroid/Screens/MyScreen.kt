@@ -30,6 +30,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun MyScreen(navController: NavController) {
+    // 각각 요소들을 감싸서 디자인. 관식이가 주로 하는 디자인 느낌으로
     var LocationShowDialog by remember { mutableStateOf(false) }
     var LogoutShowDialog1 by remember { mutableStateOf(false) }
     var LogoutShowDialog2 by remember { mutableStateOf(false) }

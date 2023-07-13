@@ -40,7 +40,7 @@ fun ItemFormat(navController: NavController, route: String, modifier: Modifier =
                 ) {
                     TextFormat(string = "상품명", size = 24)
                     Spacer(modifier = Modifier.padding(4.dp))
-                    TextFormat(string = "유통기한", size = 12)
+                    TextFormat(string = "유통기한 2일 남음", size = 12)
                     Spacer(modifier = Modifier.padding(4.dp))
                     TextFormat(string = "80000원", size = 16)
                 }
