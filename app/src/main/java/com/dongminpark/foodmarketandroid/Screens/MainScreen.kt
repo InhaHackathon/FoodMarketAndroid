@@ -16,17 +16,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -35,9 +36,11 @@ import com.dongminpark.foodmarketandroid.Format.*
 import com.dongminpark.foodmarketandroid.R
 import com.dongminpark.foodmarketandroid.Utils.Constant.Companion.outlinePadding
 import com.dongminpark.foodmarketandroid.Utils.Constants.TAG
+import com.dongminpark.foodmarketandroid.ui.theme.Point
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalComposeUiApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainScreen(navController: NavController) {
@@ -188,19 +191,45 @@ fun MainScreen(navController: NavController) {
             }
         )
     }
+    var searchEnabled by remember { mutableStateOf(false) }
+    var searchText by remember { mutableStateOf("") }
 
     Column() {
         TopAppBar(
             title = {
-                Text(text = "연무동") // 텍스트 API로 받아와서 할 예정
+                if (searchEnabled) {
+                    Icon(
+                        Icons.Default.Clear,
+                        contentDescription = "Search",
+                        modifier = Modifier.clickable {
+                            searchEnabled = !searchEnabled
+                            searchText = ""
+                        }
+                    )
+                    TextFieldFormat(text = searchText){
+                        searchText = it
+                    }
+                } else {
+                    Text(text = "연무동") // 텍스트 API로 받아올 예정
+                }
             },
             actions = {
-                Row {
-                    IconButton(onClick = { /*  */ }) {
-                        Icon(Icons.Filled.Search, contentDescription = "Search")
+                if (!searchEnabled) {
+                    Row {
+                        IconButton(onClick = {
+                            searchEnabled = !searchEnabled
+                        }) {
+                            Icon(Icons.Filled.Search, contentDescription = "Search")
+                        }
+                        IconButton(onClick = { WriteShowDialog = true }) {
+                            Icon(Icons.Filled.Create, contentDescription = "Create", tint = Point)
+                        }
                     }
-                    IconButton(onClick = { WriteShowDialog = true }) {
-                        Icon(Icons.Filled.Create, contentDescription = "Create")
+                }else{
+                    IconButton(onClick = {
+                        // 검색 api
+                    }) {
+                        Icon(Icons.Filled.Send, contentDescription = "Search")
                     }
                 }
             },
