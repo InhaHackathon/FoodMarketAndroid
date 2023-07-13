@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.sp
 import com.dongminpark.foodmarketandroid.ui.theme.suite
 
 @Composable
-fun TextFormat(modifier: Modifier = Modifier, string: String, size: Int = 15, weight: FontWeight = FontWeight.SemiBold){
+fun TextFormat(modifier: Modifier = Modifier, string: String, size: Int = 15, color: Color = Color.Black, weight: FontWeight = FontWeight.SemiBold){
     Text(
         modifier = modifier,
         text = string,
-        color = Color.Black,
+        color = color,
         fontFamily = suite,
         fontWeight = weight,
         fontSize = size.sp

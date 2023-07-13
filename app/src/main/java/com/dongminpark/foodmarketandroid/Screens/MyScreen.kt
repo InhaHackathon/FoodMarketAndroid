@@ -3,14 +3,19 @@ package com.dongminpark.foodmarketandroid.Screens
 import android.widget.Toast
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,40 +43,63 @@ fun MyScreen(navController: NavController) {
     var SecessionShowDialog2 by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(outlinePadding.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            ImageFormat(url = R.drawable.ic_launcher_foreground.toString())
-            Column(
-                modifier = Modifier.padding(12.dp),
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    TextFormat(string = "박동민", size = 30)
-                    IconButton(onClick = { /* Handle second icon button click */ }) {
-                        Icon(Icons.Filled.Create, contentDescription = "Create")
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(24.dp))
+                .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(24.dp)),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)) {
+                ImageFormat(url = R.drawable.ic_launcher_foreground.toString(), size = 180)
+                Column(
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        TextFormat(string = "박동민", size = 30)
+                        IconButton(onClick = { /* Handle second icon button click */ }) {
+                            Icon(Icons.Filled.Create, contentDescription = "Create")
+                        }
+                    }
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        TextFormat(string = "연무동", size = 20)
+                        IconButton(onClick = { LocationShowDialog = true }) {
+                            Icon(Icons.Filled.Refresh, contentDescription = "Refresh")
+                        }
                     }
                 }
-                Spacer(modifier = Modifier.padding(4.dp))
-                TextFormat(string = "연무동", size = 20)
+            }
+        }
+        Spacer(modifier = Modifier.padding(12.dp))
+
+        Row() {
+            BoxFormat(text = "관심목록") {
+                navController.navigate("my_list_screen/관심목록")
+            }
+            Spacer(modifier = Modifier.padding(8.dp))
+
+            BoxFormat(text = "판매내역") {
+                navController.navigate("my_list_screen/판매내역")
             }
         }
 
-        TextButtonFormat(string = "관심목록"){
-            // 관심목록 페이지 이동
-            // MyListPage(navController = navController, title = "관심목록") 여기로 이동
-            navController.navigate("my_list_screen/관심목록")
-        }
-        TextButtonFormat(string = "판매내역"){
-            // 판매내역 페이지 이동
-            // MyListPage(navController = navController, title = "판매내역") 여기로 이동
-            navController.navigate("my_list_screen/판매내역")
-        }
-        // 관심목록과 판매내역은 같은 함수 재활용. 배열과 이름을 받아서 출력하는 방식
+        Spacer(modifier = Modifier.padding(8.dp))
 
-        TextButtonFormat(string = "위치 최신화"){
-            //Toast.makeText(App.instance, "위치정보 최신화 완료!", Toast.LENGTH_SHORT).show()
-            LocationShowDialog = true
-            // 위치 최신화 함수 호출
-            // 로딩 팝업 띄우고 특정 시간 뒤 종료
+        Row() {
+            BoxFormat(text = "로그아웃") {
+                LogoutShowDialog1 = true
+            }
+
+            Spacer(modifier = Modifier.padding(8.dp))
+
+            BoxFormat(text = "회원탈퇴", color = Color.Red) {
+                SecessionShowDialog1 = true
+            }
         }
+
         if (LocationShowDialog) {
             LaunchedEffect(true) {
                 delay(3000L) // 3초 후에 로딩 인디케이터를 닫습니다.
@@ -105,9 +133,7 @@ fun MyScreen(navController: NavController) {
         }
 
 
-        TextButtonFormat(string = "로그아웃"){
-            LogoutShowDialog1 = true
-        }
+
         if (LogoutShowDialog1) {
             AlertDialog(
                 onDismissRequest = { LogoutShowDialog1 = false },
@@ -154,9 +180,7 @@ fun MyScreen(navController: NavController) {
             )
         }
 
-        TextButtonFormat(string = "탈퇴하기", color = Color.Red){
-            SecessionShowDialog1 = true
-        }
+
         if (SecessionShowDialog1) {
             AlertDialog(
                 onDismissRequest = { SecessionShowDialog1 = false },
@@ -228,5 +252,21 @@ fun MyListScreen(navController: NavController, title: String){ //리스트도 �
                 ItemFormat(navController, "my")
             }
         }
+    }
+}
+
+@Composable
+fun BoxFormat(text: String, color: Color = Color.Black, content: () -> Unit){
+    Row(modifier = Modifier
+        .size(180.dp)
+        .clip(RoundedCornerShape(24.dp))
+        .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(24.dp))
+        .clickable {
+            content()
+        },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ){
+        TextFormat(string = text, size = 30, color = color)
     }
 }

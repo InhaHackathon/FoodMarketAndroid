@@ -146,7 +146,7 @@ fun MainScreen(navController: NavController) {
                                 selectedPhotos.addAll(it)
                             }
                         }
-                        
+
                         LazyRow() {
                             itemsIndexed(selectedPhotos) { index, item ->
                                 Box(contentAlignment = Alignment.TopEnd){
