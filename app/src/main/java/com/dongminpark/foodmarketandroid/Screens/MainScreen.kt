@@ -206,6 +206,7 @@ fun MainScreen(navController: NavController) {
                             searchText = ""
                         }
                     )
+                    Spacer(modifier = Modifier.padding(4.dp))
                     TextFieldFormat(text = searchText){
                         searchText = it
                     }
@@ -229,15 +230,15 @@ fun MainScreen(navController: NavController) {
                     IconButton(onClick = {
                         // 검색 api
                     }) {
-                        Icon(Icons.Filled.Send, contentDescription = "Search")
+                        Icon(Icons.Filled.Send, contentDescription = "Search", tint = Point)
                     }
                 }
             },
             elevation = 4.dp
         )
         // 버튼으로 만들고, 해당 정보를 매개변수로 넘기기.
-        LazyColumn(modifier = Modifier.padding(outlinePadding.dp)) {
-            items(15) {
+        LazyColumn(modifier = Modifier.padding(1.dp)) {
+            items(count = 15) {
                 ItemFormat(navController, "main")
             }
         }

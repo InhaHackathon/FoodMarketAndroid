@@ -57,7 +57,7 @@ fun DetailScreen(navController: NavController, route: String) {
                         ImageFormat(url = "", size = 80)
                         Spacer(modifier = Modifier.width(10.dp))
                         Column() {
-                            TextFormat(string = "이름", size = 32)
+                            TextFormat(string = "박동민", size = 32)
                             TextFormat(string = "연무동", size = 16)
                         }
 
@@ -123,14 +123,13 @@ fun DetailScreen(navController: NavController, route: String) {
 @Composable
 fun PostUi(images: ArrayList<String>) {
     var nowImageIndex = rememberPagerState(0)
-
+    var circle = painterResource(id = R.drawable.circle)
     // 사진 갯수따라 동적인 변화 필요
-    val indexIcons: List<Painter> = listOf(
-        painterResource(id = R.drawable.circle),
-        painterResource(id = R.drawable.circle),
-        painterResource(id = R.drawable.circle),
-        painterResource(id = R.drawable.circle)
-    )
+    var indexIcons: List<Painter> = listOf()
+
+    repeat(images.size){
+       indexIcons = indexIcons.plus(circle)
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(),

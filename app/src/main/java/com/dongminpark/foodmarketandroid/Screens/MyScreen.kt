@@ -58,16 +58,16 @@ fun MyScreen(navController: NavController) {
                     modifier = Modifier.padding(horizontal = 12.dp),
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        TextFormat(string = "박동민", size = 30)
+                        TextFormat(string = "박동민", size = 36)
                         IconButton(onClick = { /* Handle second icon button click */ }) {
-                            Icon(Icons.Filled.Create, contentDescription = "Create")
+                            Icon(Icons.Filled.Create, contentDescription = "Create", tint = Point)
                         }
                     }
                     Spacer(modifier = Modifier.padding(4.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        TextFormat(string = "연무동", size = 20)
+                        TextFormat(string = "연무동", size = 24)
                         IconButton(onClick = { LocationShowDialog = true }) {
-                            Icon(Icons.Filled.Refresh, contentDescription = "Refresh")
+                            Icon(Icons.Filled.Refresh, contentDescription = "Refresh", tint = Point)
                         }
                     }
                 }

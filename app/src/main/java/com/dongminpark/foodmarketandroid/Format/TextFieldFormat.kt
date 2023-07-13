@@ -29,7 +29,7 @@ fun TextFieldFormat(modifier: Modifier = Modifier, keyboardOptions: KeyboardOpti
         modifier = modifier
             .border(
                 BorderStroke(1.dp, Color.Gray),
-                shape = RoundedCornerShape(4.dp)
+                shape = RoundedCornerShape(12.dp)
             )
             .fillMaxWidth(),
         maxLines = if (isSingle) 1 else 100,
