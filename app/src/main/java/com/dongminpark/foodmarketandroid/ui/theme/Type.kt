@@ -2,9 +2,21 @@ package com.dongminpark.foodmarketandroid.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.dongminpark.foodmarketandroid.R
+
+val suite = FontFamily(
+    Font(R.font.suite_bold, FontWeight.Bold, FontStyle.Normal),
+    Font(R.font.suite_extrabold, FontWeight.ExtraBold, FontStyle.Normal),
+    Font(R.font.suite_semibold, FontWeight.SemiBold, FontStyle.Normal),
+    Font(R.font.suite_normal, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.suite_medium, FontWeight.Medium, FontStyle.Normal),
+    Font(R.font.suite_light, FontWeight.Light, FontStyle.Normal)
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(

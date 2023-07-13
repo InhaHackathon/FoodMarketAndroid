@@ -5,26 +5,25 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    onPrimary = White, // 글자색
+    primary = Black, // 배경색
+    primaryVariant = Point, // 포인트색
+    secondary = Gray, // 선택안된 BotomScreen icon & 검색창 돋보기와 X 아이콘
+    onSecondary = SearchBarBG, // // 검색창 색
+    secondaryVariant = SearchBarTT // 검색창 글씨
+// black 테마는 수정 필요
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    onPrimary = Black, // 글자색
+    primary = White, // 배경색
+    primaryVariant = Point, // 포인트색
+    secondary = Gray, // 선택안된 BotomScreen icon & 검색창 돋보기와 X 아이콘
+    onSecondary = CustomGray, // // 검색창 색
+    secondaryVariant = Color.LightGray // 검색창 글씨
 )
 
 @Composable
@@ -32,11 +31,7 @@ fun FoodmarketAndroidTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+    val colors = LightColorPalette
 
     MaterialTheme(
         colors = colors,
