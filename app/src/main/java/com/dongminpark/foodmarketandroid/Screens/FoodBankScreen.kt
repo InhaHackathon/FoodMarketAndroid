@@ -32,6 +32,7 @@ fun FoodBankScreen(navController: NavController) {
             items(20){
                 FoodBankItemFormat(){
                     // FoodBankDetailScreen으로 이동
+                    navController.navigate("foodbank_detail_screen")
                 }
             }
         }

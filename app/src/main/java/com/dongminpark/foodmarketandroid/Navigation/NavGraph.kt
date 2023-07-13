@@ -11,10 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.dongminpark.foodmarketandroid.Screens.*
 import com.dongminpark.foodmarketandroid.navigation.*
 import java.lang.Exception
@@ -44,7 +46,7 @@ fun BottomNavigation(navController: NavHostController) {
         BottomScreen.My
     )
 
-    androidx.compose.material.BottomNavigation {
+    BottomNavigation {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
@@ -99,7 +101,9 @@ fun MainScreenView(startDestination: String) {
                 startDestination = startDestination,
             ) {
                 // Main
-                composable(MainNavigationScreens.Main.route) { MainScreen() }
+                composable(MainNavigationScreens.Main.route) { MainScreen(navController = navController) }
+                composable(MainNavigationScreens.Detail.route) { DetailScreen(navController = navController, "main") }
+                composable(MainNavigationScreens.Profile.route) { ProfileScreen(navController = navController, "main")}
 
                 // Community
                 composable(ChattingNavigationScreens.Chatting.route) {
@@ -125,11 +129,29 @@ fun MainScreenView(startDestination: String) {
                 composable(FoodBankNavigationScreens.FoodBank.route) {
                     FoodBankScreen(navController = navController)
                 }
+                composable(FoodBankNavigationScreens.FoodBankDetail.route) {
+                    FoodBankDetailScreen(navController = navController)
+                }
 
 
                 // My
                 composable(MyNavigationScreens.My.route) {
                     MyScreen(navController = navController)
+                }
+
+                composable(
+                    route = "${MyNavigationScreens.MyList.route}/{variable}",
+                    arguments = listOf(navArgument("variable") { type = NavType.StringType })
+                ) { entry ->
+                    val variable = entry.arguments?.getString("variable")
+                    MyListScreen(navController = navController, title = variable!!)
+                }
+
+                composable(MyNavigationScreens.MyList.route) {
+                    //
+                }
+                composable(MyNavigationScreens.MyDetail.route) {
+                    DetailScreen(navController = navController, "my")
                 }
             }
         }

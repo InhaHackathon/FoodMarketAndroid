@@ -33,7 +33,7 @@ fun FoodBankDetailScreen(navController: NavController) {
             },
             title = {
                 Text(
-                    text = "지점 명",
+                    text = "팔도푸드뱅크",
                 ) // 텍스트 API로 받아와서 할 예정
             },
             elevation = 4.dp
@@ -41,32 +41,6 @@ fun FoodBankDetailScreen(navController: NavController) {
         TmapView()
     }
 }
-
-@Composable
-fun fbds(){
-    var navController = rememberNavController()
-    Column {
-        TopAppBar(
-            navigationIcon = {
-                BackButton(navController = navController)
-            },
-            title = {
-                Text(
-                    text = "지점 명",
-                ) // 텍스트 API로 받아와서 할 예정
-            },
-            elevation = 4.dp
-        )
-        TmapView()
-    }
-}
-
-@Preview
-@Composable
-fun fbdsPreview(){
-    fbds()
-}
-
 
 @Composable
 fun TmapView() {
@@ -75,12 +49,15 @@ fun TmapView() {
 
     AndroidView(factory = { tMapView })
 
-    val centerLatitude = 37.44845494879633
-    val centerLongitude = 126.6494939089789
+    val centerLatitude = 37.2975248664509
+    val centerLongitude = 127.03594482989078
+//    val centerLatitude = 37.44845494879633
+//    val centerLongitude = 126.6494939089789
 
     LaunchedEffect(tMapView) {
         tMapView.setSKTMapApiKey("mpqOluGuKn4C1DszIeY9Z33DCyl4BhPR6DGHaQT9")
-        addMarkerToTmapView(tMapView, 37.44650724756766, 126.63704946161081)
+        //addMarkerToTmapView(tMapView, 37.44650724756766, 126.63704946161081)
+        addMarkerToTmapView(tMapView, 37.29017781822823, 127.00305619761924)
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN)
         tMapView.setZoomLevel(13)
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD)

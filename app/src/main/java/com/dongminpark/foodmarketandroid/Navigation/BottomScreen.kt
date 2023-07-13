@@ -25,17 +25,20 @@ sealed class BottomScreen(
 sealed class MainNavigationScreens(val route: String) {
     object Main : MainNavigationScreens("main")
     object Detail : MainNavigationScreens("main_detail_screen")
-    object User : MainNavigationScreens("main_user_screen")
+    object Profile : MainNavigationScreens("main_profile_screen")
 }
 
 sealed class ChattingNavigationScreens(val route: String) {
     object Chatting : ChattingNavigationScreens("chatting")
 }
 
-sealed class MyNavigationScreens(val route: String = "my") {
-    object My : MyNavigationScreens("my")
-}
-
 sealed class FoodBankNavigationScreens(val route: String) {
     object FoodBank : FoodBankNavigationScreens("foodbank")
+    object FoodBankDetail : FoodBankNavigationScreens("foodbank_detail_screen")
+}
+
+sealed class MyNavigationScreens(val route: String = "my") {
+    object My : MyNavigationScreens("my")
+    object MyList : MyNavigationScreens("my_list_screen")
+    object MyDetail : MyNavigationScreens("my_detail_screen")
 }

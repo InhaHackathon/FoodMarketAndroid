@@ -44,7 +44,6 @@ var isLoginLoading by mutableStateOf(false)
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
-
     navController.enableOnBackPressed(false)
     var counts by rememberSaveable { mutableStateOf(0) }
 
@@ -107,7 +106,6 @@ fun LoginScreen(navController: NavHostController) {
                             /*
                             isLoginLoading = true
                             googleLogin()
-
                              */
                         }
                         .padding(10.dp)

@@ -13,14 +13,14 @@ import androidx.compose.ui.unit.sp
 import com.dongminpark.foodmarketandroid.ui.theme.suite
 
 @Composable
-fun TextButtonFormat(modifier: Modifier = Modifier, string: String, size: Int = 30, weight: FontWeight = FontWeight.SemiBold, content: () -> Unit){
+fun TextButtonFormat(modifier: Modifier = Modifier, string: String, size: Int = 30, weight: FontWeight = FontWeight.SemiBold, color: Color = Color.Black, content: () -> Unit){
     Text(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 0.dp, vertical = 8.dp)
             .clickable { content() },
         text = string,
-        color = Color.Black,
+        color = color,
         fontFamily = suite,
         fontWeight = weight,
         fontSize = size.sp

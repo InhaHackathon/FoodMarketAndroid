@@ -24,13 +24,13 @@ import com.dongminpark.foodmarketandroid.ui.theme.FoodmarketAndroidTheme
 import com.dongminpark.projectgd.Button.FavoriteButton
 
 var testString =
-    "이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용"
+    "이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용 이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용"
 
 @Composable
-fun DetailScreen(navController: NavController) {
+fun DetailScreen(navController: NavController, route: String) {
     LazyColumn(
         modifier = Modifier
-            .padding(bottom = 16.dp)
+            //.padding(bottom = 16.dp)
     ) {
         item {
             // 사진 Pager로 표시 및 현재 페이지 표시
@@ -49,14 +49,18 @@ fun DetailScreen(navController: NavController) {
                         modifier = Modifier
                             .clickable {
                                 // 프로필 창으로 이동
-                                //navController.navigate(route + "_user_screen" + "/$userId")
+                                navController.navigate(route + "_profile_screen")
                             }
                             .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ImageFormat(url = "", size = 80)
                         Spacer(modifier = Modifier.width(10.dp))
-                        TextFormat(string = "이름", size = 32)
+                        Column() {
+                            TextFormat(string = "이름", size = 32)
+                            TextFormat(string = "연무동", size = 16)
+                        }
+
                     }
                     Box(
                         modifier = Modifier
@@ -64,7 +68,7 @@ fun DetailScreen(navController: NavController) {
                             .padding(10.dp),
                         contentAlignment = Alignment.BottomEnd
                     ) {
-                        TextFormat(string = "연무동", size = 16)
+                        TextFormat(string = "2일 남음", size = 28)
                     }
                 }
 
@@ -83,10 +87,8 @@ fun DetailScreen(navController: NavController) {
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        FavoriteButton(like = true, postNum = 1)
-                        TextFormat(string = "30", size = 8)
-                    }
+
+                    FavoriteButton(like = true, postNum = 1, count = 30)
 
                     Spacer(modifier = Modifier.padding(8.dp))
 
@@ -216,11 +218,9 @@ fun detailPreview() {
 
                     Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
+                    // 하단 정보창
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            FavoriteButton(like = true, postNum = 1)
-                            TextFormat(string = "30", size = 8)
-                        }
+                        FavoriteButton(like = true, postNum = 1, count = 30)
 
                         Spacer(modifier = Modifier.padding(8.dp))
 

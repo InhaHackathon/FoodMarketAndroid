@@ -27,13 +27,50 @@ import com.dongminpark.foodmarketandroid.Utils.Constant.Companion.outlinePadding
 import com.dongminpark.foodmarketandroid.ui.theme.FoodmarketAndroidTheme
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(navController: NavController, route: String) {
+    Column() {
+        TopAppBar(
+            navigationIcon = {
+                BackButton(navController = navController)
+            },
+            title = {
+                Text(
+                    text = "이름 프로필",
+                ) // 텍스트 API로 받아와서 할 예정
+            },
+            elevation = 4.dp
+        )
+        LazyColumn() {
+            item {
+                Row(
+                    modifier = Modifier
+                        .padding(outlinePadding.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.Top
+                ) {
+                    ImageFormat(url = R.drawable.ic_launcher_foreground.toString(), size = 120)
+                    Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp)) {
+                        TextFormat(string = "박동민", size = 32)
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        TextFormat(string = "연무동", size = 24)
+                    }
+                }
+            }
 
+            // 판매 상품
+            items(15) {
+                ItemFormat(
+                    navController = navController,
+                    route = route
+                )
+            }
+        }
+    }
 }
 
 
 @Composable
-fun profile() {
+fun profile(route: String) {
     var navController = rememberNavController()
 
     Column() {
@@ -67,7 +104,7 @@ fun profile() {
 
             // 판매 상품
             items(15) {
-                ItemFormat(modifier = Modifier.padding(outlinePadding.dp))
+                ItemFormat(modifier = Modifier.padding(outlinePadding.dp), navController = navController, route = route)
             }
         }
     }
@@ -78,6 +115,6 @@ fun profile() {
 @Composable
 fun profilePreview() {
     FoodmarketAndroidTheme {
-        profile()
+        //profile()
     }
 }
