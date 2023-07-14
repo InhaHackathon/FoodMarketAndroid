@@ -18,6 +18,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -29,11 +31,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.dongminpark.foodmarketandroid.Button.BackButton
+import com.dongminpark.foodmarketandroid.Format.ImageFormat
+import com.dongminpark.foodmarketandroid.Format.TextFormat
 import com.dongminpark.foodmarketandroid.Model.ChatMessage
+import com.dongminpark.foodmarketandroid.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ChattingDetailScreen(navController: NavController) {
+fun ChattingChattingDetailScreen(navController: NavController, route: String) {
     val textFieldColors = TextFieldDefaults.textFieldColors(
         backgroundColor = Color.Transparent,
         focusedIndicatorColor = Color.Transparent,
@@ -42,16 +47,16 @@ fun ChattingDetailScreen(navController: NavController) {
     )
     val chatMessages = remember {
         listOf(
-//            ChatMessage("other", "안녕하세요 물품 구매하고싶어서 연락드렸어요", "10:00 AM"),
-//            ChatMessage("me", "네 안녕하세요", "10:01 AM"),
-//            ChatMessage("other", "사용감 있나요? 좀 깎아주세요", "10:02 AM"),
-//            ChatMessage("me", "네고 안됩니다.", "10:03 AM"),
-//            ChatMessage("other", "그건 너무 비싸네요", "10:03 AM"),
-//            ChatMessage("other", "안녕하세요 물품 구매하고싶어서 연락드렸어요", "10:00 AM"),
-//            ChatMessage("me", "네 안녕하세요", "10:01 AM"),
-//            ChatMessage("other", "사용감 있나요? 좀 깎아주세요", "10:02 AM"),
-//            ChatMessage("me", "네고 안됩니다.", "10:03 AM"),
-//            ChatMessage("other", "그건 너무 비싸네요", "10:03 AM"),
+            ChatMessage("other", "안녕하세요 물품 구매하고싶어서 연락드렸어요", "10:00 AM"),
+            ChatMessage("me", "네 안녕하세요", "10:01 AM"),
+            ChatMessage("other", "사용감 있나요? 좀 깎아주세요", "10:02 AM"),
+            ChatMessage("me", "네고 안됩니다.", "10:03 AM"),
+            ChatMessage("other", "그건 너무 비싸네요", "10:03 AM"),
+            ChatMessage("other", "안녕하세요 물품 구매하고싶어서 연락드렸어요", "10:00 AM"),
+            ChatMessage("me", "네 안녕하세요", "10:01 AM"),
+            ChatMessage("other", "사용감 있나요? 좀 깎아주세요", "10:02 AM"),
+            ChatMessage("me", "네고 안됩니다.", "10:03 AM"),
+            ChatMessage("other", "그건 너무 비싸네요", "10:03 AM"),
             ChatMessage("other", "안녕하세요 물품 구매하고싶어서 연락드렸어요", "10:00 AM"),
             ChatMessage("me", "네 안녕하세요", "10:01 AM"),
             ChatMessage("other", "사용감 있나요? 좀 깎아주세요", "10:02 AM"),
@@ -88,6 +93,36 @@ fun ChattingDetailScreen(navController: NavController) {
                 )
             }
         )
+
+        Box(modifier = Modifier.padding(4.dp)){
+            Button(
+                modifier = Modifier
+                    .shadow(0.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(24.dp)),
+                onClick = {
+                    navController.navigate(route + "_detail_screen")
+                }) {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.BottomEnd,
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        ImageFormat(url = R.drawable.ic_launcher_foreground.toString(), size = 60)
+                        Column(
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
+                        ) {
+                            TextFormat(string = "상품 이름", size = 24)
+                            Spacer(modifier = Modifier.padding(4.dp))
+                            TextFormat(string = "가격", size = 16)
+                        }
+                    }
+                }
+            }
+        }
 
         Box(modifier = Modifier.weight(1f)) {
             ChatScreen(chatMessages)
@@ -176,7 +211,10 @@ fun ChattingDetailScreen(navController: NavController) {
             text = { Text("채팅방에서 나가셨습니다.") },
             confirmButton = {
                 Button(
-                    onClick = { isExitChatting2 = false},
+                    onClick = {
+                        isExitChatting2 = false
+                        navController.navigate("chatting_screen")
+                              },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("확인")

@@ -107,6 +107,7 @@ fun MainScreenView(startDestination: String) {
                 composable(MainNavigationScreens.Main.route) { MainScreen(navController = navController) }
                 composable(MainNavigationScreens.Detail.route) { DetailScreen(navController = navController, "main") }
                 composable(MainNavigationScreens.Profile.route) { ProfileScreen(navController = navController, "main")}
+                composable(MainNavigationScreens.Chatting.route) { ChattingChattingDetailScreen(navController = navController, "main") }
 
                 // Chatting
                 composable(ChattingNavigationScreens.Chatting.route) {
@@ -114,10 +115,16 @@ fun MainScreenView(startDestination: String) {
                         navController = navController
                     )
                 }
-
+                composable(ChattingNavigationScreens.ChattingChattingDetail.route) {
+                    ChattingChattingDetailScreen(
+                        navController = navController,
+                        route = "chatting"
+                    )
+                }
                 composable(ChattingNavigationScreens.ChattingDetail.route) {
-                    ChattingDetailScreen(
-                        navController = navController
+                    DetailScreen(
+                        navController = navController,
+                        route = "chatting"
                     )
                 }
 
@@ -160,6 +167,7 @@ fun MainScreenView(startDestination: String) {
                 composable(MyNavigationScreens.MyDetail.route) {
                     DetailScreen(navController = navController, "my")
                 }
+                composable(MyNavigationScreens.Chatting.route) { ChattingChattingDetailScreen(navController = navController, "my") }
             }
         }
     }

@@ -53,7 +53,7 @@ fun ChattingFormat(navController: NavController){
                 .clip(RoundedCornerShape(24.dp))
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(24.dp)),
             onClick = {
-                navController.navigate("chatting_detail_screen")
+                navController.navigate("chatting_detail_detail_screen")
             }) {
             Box(
                 modifier = Modifier.fillMaxWidth(),

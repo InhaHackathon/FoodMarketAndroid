@@ -109,7 +109,10 @@ fun DetailScreen(navController: NavController, route: String) {
                             .padding(10.dp),
                         contentAlignment = Alignment.BottomEnd
                     ) {
-                        Button(onClick = { /*TODO*/ }) {
+                        Button(onClick = {
+                            navController.navigate(route + "_chatting_detail_screen")
+                            // 추후 내가 채팅하고자 하는 사용자의 정보를 보내거나 받거나 하는 기능 필요
+                        }) {
                             TextFormat(string = "채팅하기", size = 16)
                         }
                     }

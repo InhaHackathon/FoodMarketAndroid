@@ -35,10 +35,12 @@ sealed class MainNavigationScreens(val route: String) {
     object Main : MainNavigationScreens("main")
     object Detail : MainNavigationScreens("main_detail_screen")
     object Profile : MainNavigationScreens("main_profile_screen")
+    object Chatting : MainNavigationScreens("main_chatting_detail_screen")
 }
 
 sealed class ChattingNavigationScreens(val route: String) {
     object Chatting : ChattingNavigationScreens("chatting")
+    object ChattingChattingDetail : ChattingNavigationScreens("chatting_detail_detail_screen")
     object ChattingDetail : ChattingNavigationScreens("chatting_detail_screen")
 }
 
@@ -51,4 +53,5 @@ sealed class MyNavigationScreens(val route: String = "my") {
     object My : MyNavigationScreens("my")
     object MyList : MyNavigationScreens("my_list_screen")
     object MyDetail : MyNavigationScreens("my_detail_screen")
+    object Chatting : MyNavigationScreens("my_chatting_detail_screen")
 }
