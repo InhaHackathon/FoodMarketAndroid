@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -57,8 +58,8 @@ fun DetailScreen(navController: NavController, route: String) {
                         ImageFormat(url = "", size = 80)
                         Spacer(modifier = Modifier.width(10.dp))
                         Column() {
-                            TextFormat(string = "박동민", size = 32)
-                            TextFormat(string = "연무동", size = 16)
+                            TextFormat(string = "박동민", size = 24)
+                            TextFormat(string = "연무동", size = 16, weight = FontWeight.Light)
                         }
 
                     }
@@ -68,7 +69,7 @@ fun DetailScreen(navController: NavController, route: String) {
                             .padding(10.dp),
                         contentAlignment = Alignment.BottomEnd
                     ) {
-                        TextFormat(string = "2일 남음", size = 28)
+                        TextFormat(string = "2일 남음", size = 20)
                     }
                 }
 
@@ -82,7 +83,7 @@ fun DetailScreen(navController: NavController, route: String) {
                 )
                 Spacer(modifier = Modifier.padding(vertical = 8.dp))
                 // 내용
-                TextFormat(string = testString, size = 16)
+                TextFormat(string = testString, size = 16, weight = FontWeight.Light)
 
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
@@ -99,9 +100,9 @@ fun DetailScreen(navController: NavController, route: String) {
                             .width(1.dp)
                     )
 
-                    Spacer(modifier = Modifier.padding(8.dp))
+                    Spacer(modifier = Modifier.padding(4.dp))
 
-                    TextFormat(string = "7000원", size = 24)
+                    TextFormat(string = "7000원", size = 20)
 
                     Box(
                         modifier = Modifier

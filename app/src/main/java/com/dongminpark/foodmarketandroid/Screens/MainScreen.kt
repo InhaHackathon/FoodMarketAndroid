@@ -211,7 +211,7 @@ fun MainScreen(navController: NavController) {
                         searchText = it
                     }
                 } else {
-                    Text(text = "연무동") // 텍스트 API로 받아올 예정
+                    TextFormat(string = "연무동", size = 24)
                 }
             },
             actions = {

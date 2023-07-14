@@ -43,6 +43,7 @@ fun ItemFormat(navController: NavController, route: String, modifier: Modifier =
                     Column(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
                     ) {
+                        Spacer(modifier = Modifier.padding(6.dp))
                         TextFormat(string = "상품명", size = 24)
                         Spacer(modifier = Modifier.padding(4.dp))
                         TextFormat(string = "유통기한 2일 남음", size = 12)
@@ -50,7 +51,7 @@ fun ItemFormat(navController: NavController, route: String, modifier: Modifier =
                         TextFormat(string = "80000원", size = 16)
                     }
                 }
-                FavoriteButton(like = true, postNum = 1, count = 30, size = 40)
+                FavoriteButton(like = true, postNum = 1, count = 30, size = 25)
             }
         }
     }

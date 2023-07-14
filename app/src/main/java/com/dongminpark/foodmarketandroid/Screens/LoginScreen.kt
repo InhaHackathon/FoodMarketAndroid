@@ -3,6 +3,7 @@ package com.dongminpark.foodmarketandroid.Screens
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -39,13 +40,13 @@ import com.dongminpark.foodmarketandroid.Retrofit.RetrofitManager
 import com.dongminpark.foodmarketandroid.Utils.Constants.TAG
 import com.dongminpark.foodmarketandroid.Utils.MESSAGE
 import com.dongminpark.foodmarketandroid.Utils.RESPONSE_STATE
+import com.dongminpark.foodmarketandroid.ui.theme.Point
 
 var isLoginLoading by mutableStateOf(false)
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
     navController.enableOnBackPressed(false)
-    var counts by rememberSaveable { mutableStateOf(0) }
 
     if (isLoginLoading){
         Column(
@@ -69,31 +70,35 @@ fun LoginScreen(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White),
+                .background(Point),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text(
-                text = "이집내집에서\n원하는 집을 마음껏 상상해봐",
-                fontFamily = suite,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 25.sp,
-                color = Color.Black,
-                modifier = Modifier
-                    .padding(vertical = 100.dp, horizontal = 0.dp)
-                    .clickable {
-                        counts++
-                    }
-            )
+            Spacer(modifier = Modifier)
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "세상에서 가장 환경적인 거래",
+                    fontFamily = suite,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 25.sp,
+                    color = Color.Black,
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.eat_logo),
+                    contentDescription = "먹어요",
+                    modifier = Modifier.size(160.dp)
+                )
+            }
+
 
             // 비율 맞추기용도
-            Spacer(modifier = Modifier)
+            //Spacer(modifier = Modifier)
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "SNS계정으로 로그인하기",
                     fontFamily = suite,
-                    fontWeight = FontWeight.Light,
+                    fontWeight = FontWeight.Bold,
                     color = Color.Black,
                 )
 
@@ -109,8 +114,8 @@ fun LoginScreen(navController: NavHostController) {
                              */
                         }
                         .padding(10.dp)
-                        .width(200.dp)
-                        .border(1.dp, Color.LightGray),
+                        .width(200.dp),
+                        //.border(1.dp, Color.LightGray),
                     tint = Color.Unspecified
                 )
             }

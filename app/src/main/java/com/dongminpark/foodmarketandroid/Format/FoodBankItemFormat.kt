@@ -29,7 +29,7 @@ fun FoodBankItemFormat(content: () -> Unit) {
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(24.dp))
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(24.dp))
-                .padding(outlinePadding.dp),
+                .padding(24.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column() {
@@ -37,12 +37,12 @@ fun FoodBankItemFormat(content: () -> Unit) {
                     TextFormat(string = "지점명", size = 24)
                     Spacer(modifier = Modifier.padding(4.dp))
                     Icon(Icons.Default.LocationOn, contentDescription = "location")
-                    TextFormat(string = "1.2km", size = 16)
+                    TextFormat(string = "1.2km", size = 12)
                 }
                 Spacer(modifier = Modifier.padding(4.dp))
-                TextFormat(string = "주소 : 수원시 장안구 연무동 62-6 202호", size = 16)
+                TextFormat(string = "주소 : 수원시 장안구 연무동 62-6 202호", size = 14)
                 Spacer(modifier = Modifier.padding(4.dp))
-                TextFormat(string = "전화번호 : 010-2245-3683", size = 16)
+                TextFormat(string = "전화번호 : 010-2245-3683", size = 14)
             }
             Box(
                 modifier = Modifier

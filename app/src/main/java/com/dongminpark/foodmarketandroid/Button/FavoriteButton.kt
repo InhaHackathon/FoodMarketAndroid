@@ -80,6 +80,6 @@ fun FavoriteButton(like: Boolean, postNum: Int, count: Int, size: Int = 26){
                 },
             tint = Color.Unspecified
         )
-        TextFormat(string = count.toString(), size = 16)
+        TextFormat(string = count.toString(), size = 12)
     }
 }
