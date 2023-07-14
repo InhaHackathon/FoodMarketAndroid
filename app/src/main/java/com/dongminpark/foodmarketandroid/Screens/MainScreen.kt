@@ -7,6 +7,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,10 +23,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -149,24 +153,61 @@ fun MainScreen(navController: NavController) {
                                 selectedPhotos.addAll(it)
                             }
                         }
-
+                        
                         LazyRow() {
+                            item {
+                                Row {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(80.dp)
+                                            .border(
+                                                width = 1.dp,
+                                                color = Color.Gray,
+                                                shape = RoundedCornerShape(24.dp)
+                                            )
+                                            .clip(RoundedCornerShape(24.dp))
+                                            .clickable {
+                                                requestMultipleImages.launch("image/*")
+                                            },
+                                        contentAlignment = Alignment.Center
+                                    ){
+                                        Image(
+                                            painter = painterResource(id = R.drawable.camera),
+                                            contentDescription = "map",
+                                            modifier = Modifier
+                                                .size(40.dp)
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.padding(4.dp))
+                                }
+                            }
                             itemsIndexed(selectedPhotos) { index, item ->
-                                Box(contentAlignment = Alignment.TopEnd){
-                                    ImageFormat(url = item.toString())
-                                    Icon(
-                                        imageVector = Icons.Filled.Delete,
-                                        contentDescription = "delete",
-                                        modifier = Modifier.clickable {
-                                            selectedPhotos.remove(item)
-                                        }
-                                    )
+                                Row() {
+                                    Box(contentAlignment = Alignment.TopEnd){
+                                        ImageFormat(url = item.toString())
+                                        Icon(
+                                            imageVector = Icons.Filled.Delete,
+                                            contentDescription = "delete",
+                                            modifier = Modifier
+                                                .clickable {
+                                                    selectedPhotos.remove(item)
+                                                }
+                                                .clip(RoundedCornerShape(24.dp))
+                                                .background(Color.White)
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.padding(4.dp))
                                 }
                             }
                         }
-                        Button(onClick = { requestMultipleImages.launch("image/*") }) {
-                            TextFormat(string = "사진 업로드")
-                        }
+
+
+
+//                        Button(onClick = { requestMultipleImages.launch("image/*") }) {
+//                            TextFormat(string = "사진 업로드")
+//                        }
+
+
                     }
                 }
                    },

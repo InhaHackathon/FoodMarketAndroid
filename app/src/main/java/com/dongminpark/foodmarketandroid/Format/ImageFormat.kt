@@ -16,7 +16,7 @@ import coil.request.ImageRequest
 import com.dongminpark.foodmarketandroid.R
 
 @Composable
-fun ImageFormat(url: String, size: Int = 100) {
+fun ImageFormat(url: String, size: Int = 80) {
     val painter = // 이미지 로드 중 및 실패 시 표시할 이미지 리소스를 설정할 수 있습니다.
         rememberAsyncImagePainter(
             ImageRequest.Builder(LocalContext.current).data(data = url)
