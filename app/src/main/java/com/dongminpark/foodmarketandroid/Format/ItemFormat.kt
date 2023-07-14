@@ -39,7 +39,7 @@ fun ItemFormat(navController: NavController, route: String, modifier: Modifier =
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.Top
                 ) {
-                    ImageFormat(url = R.drawable.ic_launcher_foreground.toString(), size = 150)
+                    ImageFormat(url = "https://i.postimg.cc/3rVJTq7b/camera.png", size = 150)
                     Column(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
                     ) {

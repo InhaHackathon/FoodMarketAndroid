@@ -3,15 +3,6 @@ package com.dongminpark.foodmarketandroid.Utils
 object Constants {
     const val TAG: String = "로그"
 }
-
-object List{
-    val TAGLIST = listOf(
-        "TOP 30", "모던", "바우하우스", "미니멀", "내추럴",
-        "북유럽", "젠", "러스틱", "앤틱", "로맨틱", "아르누보",
-        "쉐비", "정크"
-    )
-}
-
 enum class RESPONSE_STATE {
     OKAY,
     FAIL
@@ -19,7 +10,7 @@ enum class RESPONSE_STATE {
 
 object USER{
     // 임시로 여기 적어둠. 나중에 보안을 위해서 local로 옮기거나 바꿔야함
-    var ACCESS_TOKEN: String = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b2tlbiIsImZvbGxvd0NvdW50IjoiMCIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoiR09PR0xFIiwicHJvZmlsZUltZ1VybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS9wcm9maWxlLnBuZyIsIm5hbWUiOiJbMSA6IGFkbWluXSIsImRlc2NyaXB0aW9uIjoiVGhpcyBpcyB0aGUgYWRtaW4gdXNlciIsInBvc3RDb3VudCI6IjAiLCJ1c2VySWQiOiIxIiwiZm9sbG93ZXJDb3VudCI6IjAiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNjg1NTMzMDY4LCJleHAiOjE3MTcxNTU0Njh9.rXmhh-RDdnXszwUKa-G7TsuB1zoa1M7CABwUwY8VxOU"
+    var ACCESS_TOKEN: String = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b2tlbiIsInVpZCI6IjRyOUpYam1zVHRZVjBONGl4UlRTU0NrM0pJSDIiLCJyb2xlIjoiVVNFUiIsInByb3ZpZGVyIjoiR09PR0xFIiwicHJvZmlsZUltZ1VybCI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBY0hUdGRrVTRNMkFrSTliOVh0ZnVRcHVuam9XSFRHMlhiR2ZxZHdaZlo0ZkhuWVlSaz1zOTYtYyIsIm5hbWUiOiJbMSA6IOuwleuPmeuvvF0iLCJ1c2VySWQiOiIxIiwiaWF0IjoxNjg5MzQzMzcxLCJleHAiOjE2ODk0Mjk3NzF9.9N-TQTDuDcoaKuRdxvtaiLA8uvx9C8YK--ZoBlTIBPY"
     var USERID: Int = 1
     // 프사 추가
     var NAME: String = ""
@@ -30,53 +21,26 @@ object USER{
 }
 
 object API{
-    const val BASE_URL = "http://api.ezipnaezip.life:8080"
+    const val BASE_URL = "http://api.ezipnaezip.life:8080" // 변경 예정
 
-    // BookMark
-    const val BOOKMARKS_CREATE_POSTNUM = "/bookmarks/create/{postNum}"
-    const val BOOKMARKS_DELETE_POSTNUM = "/bookmarks/delete/{postNum}"
-
-    // chat-gpt-controller
-    const val GPT_IMAGES = "/gpt/images"
-    const val GPT_STOP = "/gpt/stop"
-    const val GPT_STORE = "/gpt/store/{serialNum}"
-
-    // comment-controller
-    const val COMMENTS = "/comments"
-    const val COMMENTS_SERIALNUM_DELETE = "/comments/{serialNum}/delete"
-    const val COMMENTS_SERIALNUM_UPDATE = "/comments/{serialNum}/update"
-    const val COMMENT_LIST_POSTNUM = "/comments/list/{postNum}"
-
-    // Example
-    const val EXAMPLE = "/example"
-
-    // follow-controller
-    const val FOLLOW_FOLLOWERS = "/follow/followers/{userId}"
-    const val FOLLOW_FOLLOWING_FOLLOWINGID = "/follow/following/{followingId}"
-    const val FOLLOW_FOLLOWINGS_USERID = "/follow/followings/{userId}"
-    const val FOLLOW_UNFoLLOWING_FOLLOWERID = "/follow/unfollowing/{followerId}"
+    // Board
+    const val BOARD_CREATE = "/board/create"
+    const val BOARD_DELETE_BOARDID = "/board/delete/{boardId}"
+    const val BOARD_LIST = "/board/list"
+    const val BOARD_LIST_BOARDID = "/board/list/{boardId}"
+    const val BOARD_UPDATE_BOARDID = "/board/update/{boardId}"
+    const val BOARD_USER_USERID = "/board/user/{userId}"
+    const val BOARD_USER_MYPAGE = "/board/user/mypage"
 
     // Likes
-    const val LIKES_CREATE_POSTNUM = "/likes/create/{postNum}"
-    const val LIKES_DELETE_POSTNUM = "/likes/delete/{postNum}"
-
-    // post-controller
-    const val POST_DELETE = "/posts/delete/{postNum}"
-    const val POST_FILTER = "/posts/filter/{tagName}"
-    const val POST_LIST = "/posts/list"
-    const val POST_LIST_DETAIL = "/posts/list/{postNum}"
-    const val POST_POPULAR = "/posts/popular"
-    const val POST_SEARCH = "/posts/search"
+    const val LIKE_BOARDID = "/like/{boardId}" // 취소랑 좋아요랑 양식이 같음. 호출할때 다르게?
+    const val LIKE_LIST_USERID = "/like/list/{userId}"
 
     // user-controller
-    const val USER = "/user"
-    const val USER_INFO_USERID = "/user/info/{userId}"
-    const val USER_LIST = "/user/list" // 얜 구현 안할듯
-    const val USER_USER_USERID = "/user/user/{userId}"
+    const val USER_USERID = "/user/{userId}"
+    const val USER_DELETE_USERID = "/user/delete/{userId}"
     const val FIREBASE_CONNECT = "/user/firebase/{uid}"
-
-
-    const val UPLOAD = "/upload"
+    const val USER_UPDATE = "/user/update"
 }
 
 object MESSAGE{

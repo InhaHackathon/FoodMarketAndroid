@@ -38,7 +38,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.dongminpark.foodmarketandroid.App
 import com.dongminpark.foodmarketandroid.Format.*
 import com.dongminpark.foodmarketandroid.R
 import com.dongminpark.foodmarketandroid.Utils.Constant.Companion.outlinePadding
@@ -55,6 +57,12 @@ fun MainScreen(navController: NavController) {
 
     if (WriteShowDialog) {
         // 각각 텍스트 변수들을 밖으로 빼서 어쩌구... 할 생각
+        var nametext by remember { mutableStateOf("") }
+        var pricetext by remember { mutableStateOf("") }
+        var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+        var explaintext by remember { mutableStateOf("") }
+        val selectedPhotos = remember { mutableStateListOf<Uri>() }
+
         AlertDialog(
             modifier = Modifier.fillMaxHeight(0.9f),
             shape = RoundedCornerShape(24.dp),
@@ -63,18 +71,14 @@ fun MainScreen(navController: NavController) {
             text = {
                 LazyColumn(modifier = Modifier.padding(vertical = 12.dp)){
                     item {
-                        var text by remember { mutableStateOf("") }
-
                         TextFormat(string = "상품 이름")
                         Spacer(modifier = Modifier.padding(4.dp))
-                        TextFieldFormat(text = text) {
-                            text = it
+                        TextFieldFormat(text = nametext) {
+                            nametext = it
                         }
                         Spacer(modifier = Modifier.padding(8.dp))
                     }
                     item {
-                        var text by remember { mutableStateOf("") }
-
                         TextFormat(string = "가격")
                         Spacer(modifier = Modifier.padding(4.dp))
                         TextFieldFormat(
@@ -82,17 +86,16 @@ fun MainScreen(navController: NavController) {
                                 keyboardType = KeyboardType.Number,
                                 imeAction = androidx.compose.ui.text.input.ImeAction.Done
                             ),
-                            text = text
+                            text = pricetext
                         ){newText ->
                             if (newText.all { it.isDigit() }) {
-                                text = newText
+                                pricetext = newText
                             }
                         }
                         Spacer(modifier = Modifier.padding(8.dp))
                     }
                     item {
                         var expanded by remember { mutableStateOf(false) }
-                        var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
                         Column {
                             TextFormat(string = "유통기한")
@@ -136,19 +139,15 @@ fun MainScreen(navController: NavController) {
                         Spacer(modifier = Modifier.padding(8.dp))
                     }
                     item {
-                        var text by remember { mutableStateOf("") }
-
                         TextFormat(string = "상세 설명 (150자 제한)")
                         Spacer(modifier = Modifier.padding(4.dp))
-                        TextFieldFormat(text = text, isSingle = false) {
+                        TextFieldFormat(text = explaintext, isSingle = false) {
                             if (it.length < 150)
-                                text = it
+                                explaintext = it
                         }
                         Spacer(modifier = Modifier.padding(8.dp))
                     }
                     item {
-                        val selectedPhotos = remember { mutableStateListOf<Uri>() }
-
                         val requestMultipleImages = rememberLauncherForActivityResult(
                             contract = ActivityResultContracts.GetMultipleContents()
                         ) { uris: List<Uri>? ->
@@ -203,14 +202,6 @@ fun MainScreen(navController: NavController) {
                                 }
                             }
                         }
-
-
-
-//                        Button(onClick = { requestMultipleImages.launch("image/*") }) {
-//                            TextFormat(string = "사진 업로드")
-//                        }
-
-
                     }
                 }
                    },
@@ -220,7 +211,10 @@ fun MainScreen(navController: NavController) {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
-                        onClick = { WriteShowDialog = false },
+                        onClick = {
+                            WriteShowDialog = false
+                            // api 호출. 호출 성공시 위에 로직 실행
+                                  },
                         modifier = Modifier.fillMaxWidth(0.4f)
                     ) {
                         Text("등록")

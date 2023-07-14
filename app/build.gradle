@@ -105,5 +105,4 @@ dependencies {
 
     // 위치 구하기
     implementation 'com.google.android.gms:play-services-location:17.1.0'
-
 }

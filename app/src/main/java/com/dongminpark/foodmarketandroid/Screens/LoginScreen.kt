@@ -25,7 +25,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.dongminpark.foodmarketandroid.App
 import com.dongminpark.foodmarketandroid.OAuthData
@@ -90,10 +89,6 @@ fun LoginScreen(navController: NavHostController) {
                 )
             }
 
-
-            // 비율 맞추기용도
-            //Spacer(modifier = Modifier)
-
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "SNS계정으로 로그인하기",
@@ -107,11 +102,8 @@ fun LoginScreen(navController: NavHostController) {
                     contentDescription = "Google Login",
                     modifier = Modifier
                         .clickable {
-                            OAuthData.nav?.navigate(Screen.Once.route)
-                            /*
                             isLoginLoading = true
                             googleLogin()
-                             */
                         }
                         .padding(10.dp)
                         .width(200.dp),
@@ -158,8 +150,6 @@ fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
                 Log.e("Firebase ERROR", "먼가 먼가 잘못됨")
             }
         }
-
-
 }
 
 fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
