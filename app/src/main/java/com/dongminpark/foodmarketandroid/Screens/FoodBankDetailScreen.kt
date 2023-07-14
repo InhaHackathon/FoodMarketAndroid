@@ -49,21 +49,21 @@ fun TmapView() {
 
     AndroidView(factory = { tMapView })
 
-    val centerLatitude = 37.2975248664509
-    val centerLongitude = 127.03594482989078
-//    val centerLatitude = 37.44845494879633
-//    val centerLongitude = 126.6494939089789
+    val centerLatitude = 37.2975248664509 // 내 위치
+    val centerLongitude = 127.03594482989078 // 내 위치
+
+    val centerLatitude2 = 37.29017781822823 // 목표 위치
+    val centerLongitude2 = 127.00305619761924 //목표 위치
 
     LaunchedEffect(tMapView) {
         tMapView.setSKTMapApiKey("mpqOluGuKn4C1DszIeY9Z33DCyl4BhPR6DGHaQT9")
-        //addMarkerToTmapView(tMapView, 37.44650724756766, 126.63704946161081)
-        addMarkerToTmapView(tMapView, 37.29017781822823, 127.00305619761924)
+        addMarkerToTmapView(tMapView, centerLatitude2, centerLongitude2) // 목표 위치
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN)
         tMapView.setZoomLevel(13)
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD)
-        tMapView.setLocationPoint(centerLongitude, centerLatitude) // 기준 위치 설정
+        tMapView.setLocationPoint(centerLongitude, centerLatitude) // 기준 위치 설정 => 내 위치
         tMapView.setIconVisibility(true) // 현재 위치 아이콘 표시
-        tMapView.setCenterPoint(centerLongitude, centerLatitude) // 화면 중앙 위치 설정
+        tMapView.setCenterPoint(centerLongitude2, centerLatitude2) // 화면 중앙 위치 설정 => 목표위치
     }
 }
 

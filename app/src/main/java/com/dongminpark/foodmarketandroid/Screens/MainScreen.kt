@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -33,7 +34,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dongminpark.foodmarketandroid.Format.*
@@ -53,12 +56,12 @@ fun MainScreen(navController: NavController) {
     if (WriteShowDialog) {
         // 각각 텍스트 변수들을 밖으로 빼서 어쩌구... 할 생각
         AlertDialog(
-            modifier = Modifier.fillMaxHeight(0.95f),
+            modifier = Modifier.fillMaxHeight(0.9f),
             shape = RoundedCornerShape(24.dp),
             onDismissRequest = { },
             title = { Text("게시글 작성") },
             text = {
-                LazyColumn(){
+                LazyColumn(modifier = Modifier.padding(vertical = 12.dp)){
                     item {
                         var text by remember { mutableStateOf("") }
 
@@ -153,7 +156,7 @@ fun MainScreen(navController: NavController) {
                                 selectedPhotos.addAll(it)
                             }
                         }
-                        
+
                         LazyRow() {
                             item {
                                 Row {
@@ -234,6 +237,7 @@ fun MainScreen(navController: NavController) {
     }
     var searchEnabled by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column() {
         TopAppBar(
@@ -248,7 +252,14 @@ fun MainScreen(navController: NavController) {
                         }
                     )
                     Spacer(modifier = Modifier.padding(4.dp))
-                    TextFieldFormat(text = searchText){
+                    TextFieldFormat(
+                        text = searchText,
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                        keyboardActions = KeyboardActions(onSend = {
+                            keyboardController?.hide()
+                            // 검색 api
+                        })
+                    ){
                         searchText = it
                     }
                 } else {
@@ -269,6 +280,7 @@ fun MainScreen(navController: NavController) {
                     }
                 }else{
                     IconButton(onClick = {
+                        keyboardController?.hide()
                         // 검색 api
                     }) {
                         Icon(Icons.Filled.Send, contentDescription = "Search", tint = Point)

@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -13,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TextFieldFormat(modifier: Modifier = Modifier, keyboardOptions: KeyboardOptions = KeyboardOptions.Default, text: String, isSingle: Boolean = true, onValueChange: (String) -> Unit){
+fun TextFieldFormat(modifier: Modifier = Modifier, keyboardOptions: KeyboardOptions = KeyboardOptions.Default, keyboardActions: KeyboardActions = KeyboardActions { }, text: String, isSingle: Boolean = true, onValueChange: (String) -> Unit){
     val textFieldColors = TextFieldDefaults.textFieldColors(
         backgroundColor = Color.Transparent,
         focusedIndicatorColor = Color.Transparent,
@@ -34,6 +35,7 @@ fun TextFieldFormat(modifier: Modifier = Modifier, keyboardOptions: KeyboardOpti
             .fillMaxWidth(),
         maxLines = if (isSingle) 1 else 100,
         keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         colors = textFieldColors,
         singleLine = isSingle
     )
