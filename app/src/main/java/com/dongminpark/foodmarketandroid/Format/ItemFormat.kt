@@ -17,11 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.dongminpark.foodmarketandroid.Model.Board
 import com.dongminpark.foodmarketandroid.R
 import com.dongminpark.projectgd.Button.FavoriteButton
 
 @Composable
-fun ItemFormat(navController: NavController, route: String, modifier: Modifier = Modifier) {
+fun ItemFormat(navController: NavController, route: String, modifier: Modifier = Modifier, board: Board) {
     Box(modifier = Modifier.padding(4.dp)){
         Button(
             modifier = modifier
@@ -29,7 +30,8 @@ fun ItemFormat(navController: NavController, route: String, modifier: Modifier =
                 .clip(RoundedCornerShape(24.dp))
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(24.dp)),
             onClick = {
-                navController.navigate(route + "_detail_screen")
+                // 이동할 때 postNum 가지고 넘어가야함.
+                navController.navigate(route + "_detail_screen/${board.boardId}")
             }) {
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -39,19 +41,19 @@ fun ItemFormat(navController: NavController, route: String, modifier: Modifier =
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.Top
                 ) {
-                    ImageFormat(url = "https://i.postimg.cc/3rVJTq7b/camera.png", size = 150)
+                    ImageFormat(url = board.productImg, size = 150)
                     Column(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
                     ) {
                         Spacer(modifier = Modifier.padding(6.dp))
-                        TextFormat(string = "상품명", size = 24)
+                        TextFormat(string = board.productName, size = 24)
                         Spacer(modifier = Modifier.padding(4.dp))
-                        TextFormat(string = "유통기한 2일 남음", size = 12)
+                        TextFormat(string = board.expirationDate, size = 12)
                         Spacer(modifier = Modifier.padding(4.dp))
-                        TextFormat(string = "80000원", size = 16)
+                        TextFormat(string = "${board.price}원", size = 16)
                     }
                 }
-                FavoriteButton(like = true, postNum = 1, count = 30, size = 25)
+                FavoriteButton(like = board.isLike, postNum = board.boardId, count = board.likeCount, size = 25)
             }
         }
     }

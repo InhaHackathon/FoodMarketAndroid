@@ -262,7 +262,7 @@ fun MyListScreen(navController: NavController, title: String){ //리스트도 �
         // 리스트 띄우기
         LazyColumn(modifier = Modifier.padding(outlinePadding.dp)){
             items(15) {
-                ItemFormat(navController, "my")
+                //ItemFormat(navController, "my")
             }
         }
     }

@@ -3,6 +3,7 @@ package com.dongminpark.foodmarketandroid.Screens
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -21,6 +22,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -42,12 +44,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.dongminpark.foodmarketandroid.App
 import com.dongminpark.foodmarketandroid.Format.*
+import com.dongminpark.foodmarketandroid.Model.Board
 import com.dongminpark.foodmarketandroid.R
+import com.dongminpark.foodmarketandroid.Retrofit.RetrofitManager
 import com.dongminpark.foodmarketandroid.Utils.Constant.Companion.outlinePadding
 import com.dongminpark.foodmarketandroid.Utils.Constants.TAG
+import com.dongminpark.foodmarketandroid.Utils.MESSAGE
+import com.dongminpark.foodmarketandroid.Utils.RESPONSE_STATE
 import com.dongminpark.foodmarketandroid.ui.theme.Point
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
+
+val boards = arrayListOf<Board>()
 
 @OptIn(ExperimentalComposeUiApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -212,8 +221,39 @@ fun MainScreen(navController: NavController) {
                 ) {
                     Button(
                         onClick = {
-                            WriteShowDialog = false
-                            // api 호출. 호출 성공시 위에 로직 실행
+                            RetrofitManager.instance.boardCreate(
+                                nametext ,
+                                "urls", // 수정 필요. selectedPhotos의 값을 구분자를 넣어 string하나로 넣기.
+                                selectedDate.toString(),
+                                pricetext.toInt(),
+                                explaintext,
+                                completion = { responseState ->
+                                    when (responseState) {
+                                        RESPONSE_STATE.OKAY -> {
+                                            Log.d(TAG, "api 호출 성공")
+                                            boards.clear()
+                                            RetrofitManager.instance.boardList(completion = { responseState, resposeBody ->
+                                                when (responseState) {
+                                                    RESPONSE_STATE.OKAY -> {
+                                                        boards.addAll(resposeBody!!)
+                                                        Log.d(TAG, "MainScreen: examples load success")
+                                                        boards.reverse()
+                                                        WriteShowDialog = false
+                                                    }
+                                                    RESPONSE_STATE.FAIL -> {
+                                                        Toast.makeText(App.instance, MESSAGE.ERROR, Toast.LENGTH_SHORT).show()
+                                                        Log.d(TAG, "MainScreen: main list load Error")
+                                                    }
+                                                }
+                                            })
+
+                                        }
+                                        RESPONSE_STATE.FAIL -> {
+                                            Toast.makeText(App.instance, MESSAGE.ERROR, Toast.LENGTH_SHORT).show()
+                                            Log.d(TAG, "api 호출 에러")
+                                        }
+                                    }
+                                })
                                   },
                         modifier = Modifier.fillMaxWidth(0.4f)
                     ) {
@@ -232,61 +272,87 @@ fun MainScreen(navController: NavController) {
     var searchEnabled by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
+    var loading by rememberSaveable{ mutableStateOf(true) }
+    var isOkay by rememberSaveable{ mutableStateOf(false) }
 
-    Column() {
-        TopAppBar(
-            title = {
-                if (searchEnabled) {
-                    Icon(
-                        Icons.Default.Clear,
-                        contentDescription = "Search",
-                        modifier = Modifier.clickable {
-                            searchEnabled = !searchEnabled
-                            searchText = ""
+    if (loading){
+        loading = false
+        boards.clear()
+        RetrofitManager.instance.boardList(completion = { responseState, resposeBody ->
+            when (responseState) {
+                RESPONSE_STATE.OKAY -> {
+                    boards.addAll(resposeBody!!)
+                    isOkay = true
+                    Log.d(TAG, "MainScreen: examples load success")
+                    boards.reverse()
+                }
+                RESPONSE_STATE.FAIL -> {
+                    Toast.makeText(App.instance, MESSAGE.ERROR, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "MainScreen: main list load Error")
+                }
+            }
+        })
+    }
+    if(isOkay){
+        Column() {
+            TopAppBar(
+                title = {
+                    if (searchEnabled) {
+                        Icon(
+                            Icons.Default.Clear,
+                            contentDescription = "Search",
+                            modifier = Modifier.clickable {
+                                searchEnabled = !searchEnabled
+                                searchText = ""
+                            }
+                        )
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        TextFieldFormat(
+                            text = searchText,
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                            keyboardActions = KeyboardActions(onSend = {
+                                keyboardController?.hide()
+                                // 검색 api
+                            })
+                        ) {
+                            searchText = it
                         }
-                    )
-                    Spacer(modifier = Modifier.padding(4.dp))
-                    TextFieldFormat(
-                        text = searchText,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
-                        keyboardActions = KeyboardActions(onSend = {
+                    } else {
+                        TextFormat(string = "연무동", size = 24)
+                    }
+                },
+                actions = {
+                    if (!searchEnabled) {
+                        Row {
+                            IconButton(onClick = {
+                                searchEnabled = !searchEnabled
+                            }) {
+                                Icon(Icons.Filled.Search, contentDescription = "Search")
+                            }
+                            IconButton(onClick = { WriteShowDialog = true }) {
+                                Icon(
+                                    Icons.Filled.Create,
+                                    contentDescription = "Create",
+                                    tint = Point
+                                )
+                            }
+                        }
+                    } else {
+                        IconButton(onClick = {
                             keyboardController?.hide()
                             // 검색 api
-                        })
-                    ){
-                        searchText = it
-                    }
-                } else {
-                    TextFormat(string = "연무동", size = 24)
-                }
-            },
-            actions = {
-                if (!searchEnabled) {
-                    Row {
-                        IconButton(onClick = {
-                            searchEnabled = !searchEnabled
                         }) {
-                            Icon(Icons.Filled.Search, contentDescription = "Search")
-                        }
-                        IconButton(onClick = { WriteShowDialog = true }) {
-                            Icon(Icons.Filled.Create, contentDescription = "Create", tint = Point)
+                            Icon(Icons.Filled.Send, contentDescription = "Search", tint = Point)
                         }
                     }
-                }else{
-                    IconButton(onClick = {
-                        keyboardController?.hide()
-                        // 검색 api
-                    }) {
-                        Icon(Icons.Filled.Send, contentDescription = "Search", tint = Point)
-                    }
+                },
+                elevation = 4.dp
+            )
+            // 버튼으로 만들고, 해당 정보를 매개변수로 넘기기.
+            LazyColumn(modifier = Modifier.padding(1.dp)) {
+                items(count = boards.size) {
+                    ItemFormat(navController, "main", board = boards[it])
                 }
-            },
-            elevation = 4.dp
-        )
-        // 버튼으로 만들고, 해당 정보를 매개변수로 넘기기.
-        LazyColumn(modifier = Modifier.padding(1.dp)) {
-            items(count = 15) {
-                ItemFormat(navController, "main")
             }
         }
     }

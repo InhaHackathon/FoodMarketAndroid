@@ -105,7 +105,17 @@ fun MainScreenView(startDestination: String) {
             ) {
                 // Main
                 composable(MainNavigationScreens.Main.route) { MainScreen(navController = navController) }
-                composable(MainNavigationScreens.Detail.route) { DetailScreen(navController = navController, "main") }
+                composable(
+                    route = "${MainNavigationScreens.Detail.route}/{variable}",
+                    arguments = listOf(navArgument("variable") { type = NavType.IntType })
+                ) { entry ->
+                    val variable = entry.arguments?.getInt("variable")
+                    DetailScreen(
+                        navController = navController,
+                        route = "main",
+                        boardId = variable!!
+                    )
+                }
                 composable(MainNavigationScreens.Profile.route) { ProfileScreen(navController = navController, "main")}
                 composable(MainNavigationScreens.Chatting.route) { ChattingChattingDetailScreen(navController = navController, "main") }
 
@@ -121,27 +131,18 @@ fun MainScreenView(startDestination: String) {
                         route = "chatting"
                     )
                 }
-                composable(ChattingNavigationScreens.ChattingDetail.route) {
+                composable(
+                    route = "${ChattingNavigationScreens.ChattingDetail.route}/{variable}",
+                    arguments = listOf(navArgument("variable") { type = NavType.IntType })
+                ) { entry ->
+                    val variable = entry.arguments?.getInt("variable")
                     DetailScreen(
                         navController = navController,
-                        route = "chatting"
+                        route = "chatting",
+                        boardId = variable!!
                     )
                 }
 
-/*
-                composable(
-                    route = "${CommunityNavigationScreens.Follow.route}/{variable}",
-                    arguments = listOf(navArgument("variable") { type = NavType.StringType })
-                ) { entry ->
-                    val variable = entry.arguments?.getString("variable")
-                    FollowScreen(
-                        navController = navController,
-                        BottomScreen.Community.screenRoute,
-                        currentPage = variable!!
-                    )
-                }
-
- */
                 // FoodBank
                 composable(FoodBankNavigationScreens.FoodBank.route) {
                     FoodBankScreen(navController = navController)
@@ -163,9 +164,16 @@ fun MainScreenView(startDestination: String) {
                     val variable = entry.arguments?.getString("variable")
                     MyListScreen(navController = navController, title = variable!!)
                 }
-
-                composable(MyNavigationScreens.MyDetail.route) {
-                    DetailScreen(navController = navController, "my")
+                composable(
+                    route = "${MyNavigationScreens.MyDetail.route}/{variable}",
+                    arguments = listOf(navArgument("variable") { type = NavType.IntType })
+                ) { entry ->
+                    val variable = entry.arguments?.getInt("variable")
+                    DetailScreen(
+                        navController = navController,
+                        route = "my",
+                        boardId = variable!!
+                    )
                 }
                 composable(MyNavigationScreens.Chatting.route) { ChattingChattingDetailScreen(navController = navController, "my") }
             }

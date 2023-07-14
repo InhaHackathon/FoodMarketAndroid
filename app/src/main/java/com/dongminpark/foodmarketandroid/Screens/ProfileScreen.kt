@@ -56,7 +56,7 @@ fun ProfileScreen(navController: NavController, route: String) {
                     }
                 }
             }
-
+/*
             // 판매 상품
             items(15) {
                 ItemFormat(
@@ -64,6 +64,8 @@ fun ProfileScreen(navController: NavController, route: String) {
                     route = route
                 )
             }
+
+ */
         }
     }
 }
@@ -104,7 +106,7 @@ fun profile(route: String) {
 
             // 판매 상품
             items(15) {
-                ItemFormat(modifier = Modifier.padding(outlinePadding.dp), navController = navController, route = route)
+                //ItemFormat(modifier = Modifier.padding(outlinePadding.dp), navController = navController, route = route)
             }
         }
     }

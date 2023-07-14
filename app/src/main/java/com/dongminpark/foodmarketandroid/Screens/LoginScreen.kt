@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.GoogleAuthProvider
 import com.dongminpark.foodmarketandroid.R
 import com.dongminpark.foodmarketandroid.Retrofit.RetrofitManager
+import com.dongminpark.foodmarketandroid.Utils.Constants
 import com.dongminpark.foodmarketandroid.Utils.Constants.TAG
 import com.dongminpark.foodmarketandroid.Utils.MESSAGE
 import com.dongminpark.foodmarketandroid.Utils.RESPONSE_STATE
@@ -46,12 +47,32 @@ var isLoginLoading by mutableStateOf(false)
 @Composable
 fun LoginScreen(navController: NavHostController) {
     navController.enableOnBackPressed(false)
+    /*
+    if (OAuthData.account != null){
+        // 로그인 돼있음
+        val uid = OAuthData.auth?.currentUser?.uid ?: ""
+        RetrofitManager.instance.firebaseConnect(uid, completion = { responseState ->
+
+            when (responseState) {
+                RESPONSE_STATE.OKAY -> {
+                    OAuthData.nav?.navigate(Screen.Once.route)
+                    Log.d(Constants.TAG, "api 호출 성공")
+                }
+                RESPONSE_STATE.FAIL -> {
+                    Toast.makeText(App.instance, MESSAGE.ERROR, Toast.LENGTH_SHORT).show()
+                    Log.d(Constants.TAG, "api 호출 에러")
+                }
+            }
+        })
+    }
+
+     */
 
     if (isLoginLoading){
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White),
+                .background(Point),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -60,7 +81,7 @@ fun LoginScreen(navController: NavHostController) {
                 fontFamily = suite,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 30.sp,
-                color = Color.Black,
+                color = Color.White,
                 modifier = Modifier
                     .padding(vertical = 100.dp)
             )
@@ -102,12 +123,12 @@ fun LoginScreen(navController: NavHostController) {
                     contentDescription = "Google Login",
                     modifier = Modifier
                         .clickable {
+                            //OAuthData.nav?.navigate(Screen.Once.route)
                             isLoginLoading = true
                             googleLogin()
                         }
                         .padding(10.dp)
                         .width(200.dp),
-                        //.border(1.dp, Color.LightGray),
                     tint = Color.Unspecified
                 )
             }

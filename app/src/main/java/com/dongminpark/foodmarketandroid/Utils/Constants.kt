@@ -21,7 +21,7 @@ object USER{
 }
 
 object API{
-    const val BASE_URL = "http://api.ezipnaezip.life:8080" // 변경 예정
+    const val BASE_URL = "http://43.201.252.6:8080" // 변경 예정
 
     // Board
     const val BOARD_CREATE = "/board/create"

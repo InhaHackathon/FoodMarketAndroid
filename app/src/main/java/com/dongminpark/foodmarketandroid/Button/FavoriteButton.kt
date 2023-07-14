@@ -41,9 +41,7 @@ fun FavoriteButton(like: Boolean, postNum: Int, count: Int, size: Int = 26){
                 .size(size.dp)
                 .clickable {
                     if (isFavorite) {
-
-                        /*
-                        RetrofitManager.instance.likesDeletePostNum(
+                        RetrofitManager.instance.likeDeleteBoardId(
                             postNum, completion = { responseState ->
                                 when (responseState) {
                                     RESPONSE_STATE.OKAY -> {
@@ -59,11 +57,8 @@ fun FavoriteButton(like: Boolean, postNum: Int, count: Int, size: Int = 26){
                                     }
                                 }
                             })
-
-                         */
                     } else {
-                        /*
-                        RetrofitManager.instance.likesCreatePostNum(
+                        RetrofitManager.instance.LikeBoardId(
                             postNum, completion = { responseState ->
                                 when (responseState) {
                                     RESPONSE_STATE.OKAY -> {
@@ -81,10 +76,7 @@ fun FavoriteButton(like: Boolean, postNum: Int, count: Int, size: Int = 26){
                                     }
                                 }
                             })
-
-                         */
                     }
-                    isFavorite = !isFavorite
                 },
             tint = Color.Unspecified
         )
