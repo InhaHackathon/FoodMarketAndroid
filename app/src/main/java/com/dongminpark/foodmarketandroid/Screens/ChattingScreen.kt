@@ -72,7 +72,7 @@ fun ChattingFormat(navController: NavController){
                         TextFormat(string = "그럼 너무 비싸네요", size = 16)
                     }
                 }
-                TextFormat(string = "07.14")
+                TextFormat(string = "037.22")
             }
         }
     }

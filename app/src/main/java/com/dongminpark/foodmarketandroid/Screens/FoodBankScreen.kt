@@ -20,7 +20,7 @@ fun FoodBankScreen(navController: NavController) {
         TopAppBar(
             title = {
                 Text(
-                    text = "연무동근처 푸드뱅크",
+                    text = "내 주변 푸드뱅크",
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 ) // 텍스트 API로 받아와서 할 예정

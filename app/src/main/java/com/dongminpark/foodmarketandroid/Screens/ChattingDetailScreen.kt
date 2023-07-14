@@ -60,6 +60,8 @@ fun ChattingDetailScreen(navController: NavController) {
         )
     }
 
+    var isExitChatting1 by remember { mutableStateOf(false) }
+    var isExitChatting2 by remember { mutableStateOf(false) }
     var inputTextState by remember { mutableStateOf(TextFieldValue()) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -79,6 +81,7 @@ fun ChattingDetailScreen(navController: NavController) {
                     Icons.Default.ExitToApp,
                     contentDescription = "exit",
                     modifier = Modifier.clickable {
+                        isExitChatting1 = true
                         // 채팅방 나가기 -> 리스트에서 제거하고 리로드
                         // AlertDialog로 ㄹㅇ 나갈겨? 물어봐야함.
                     }
@@ -120,6 +123,7 @@ fun ChattingDetailScreen(navController: NavController) {
                 keyboardActions = KeyboardActions(onSend = {
                     // Handle send action
                     inputTextState = TextFieldValue()
+                    keyboardController?.hide()
                 })
             )
 
@@ -128,11 +132,60 @@ fun ChattingDetailScreen(navController: NavController) {
                 contentDescription = "send",
                 modifier = Modifier.size(30.dp).clickable {
                     // 메세지 보내기
+                    inputTextState = TextFieldValue()
+                    keyboardController?.hide()
                 }
            )
         }
-
     }
+
+    if (isExitChatting1) {
+        AlertDialog(
+            onDismissRequest = { isExitChatting1 = false },
+            title = { Text("채팅방 나가기") },
+            text = { Text("정말로 채팅방을 나가시겠습니까?\n복구가 불가능합니다.") },
+            confirmButton = {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Button(
+                        onClick = {
+                            isExitChatting2 = true
+                            isExitChatting1 = false },
+                        modifier = Modifier.fillMaxWidth(0.4f)
+                    ) {
+                        Text("나가기")
+                    }
+                    Button(
+                        onClick = {
+                            isExitChatting1 = false },
+                        modifier = Modifier.fillMaxWidth(0.7f)
+                    ) {
+                        Text("취소")
+                    }
+                }
+
+            }
+        )
+    }
+    if (isExitChatting2) {
+        AlertDialog(
+            onDismissRequest = { isExitChatting2 = false },
+            title = { Text("채팅방 나가기") },
+            text = { Text("채팅방에서 나가셨습니다.") },
+            confirmButton = {
+                Button(
+                    onClick = { isExitChatting2 = false},
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("확인")
+                }
+            }
+        )
+    }
+
+
 }
 
 @Composable
