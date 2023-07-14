@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -27,11 +28,10 @@ fun ChattingScreen(navController: NavController) {
     Column() {
         TopAppBar(
             title = {
-                Text(
-                    text = "채팅",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                ) // 텍스트 API로 받아와서 할 예정
+                TextFormat(
+                    string = "채팅",
+                    size = 24
+                )
             },
             elevation = 4.dp
         )
@@ -56,7 +56,9 @@ fun ChattingFormat(navController: NavController){
                 navController.navigate("chatting_detail_detail_screen")
             }) {
             Box(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
                 contentAlignment = Alignment.BottomEnd,
             ) {
                 Row(
@@ -67,12 +69,12 @@ fun ChattingFormat(navController: NavController){
                     Column(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
                     ) {
-                        TextFormat(string = "한관희", size = 24)
+                        TextFormat(string = "한관희", size = 20)
                         Spacer(modifier = Modifier.padding(4.dp))
                         TextFormat(string = "그럼 너무 비싸네요", size = 16)
                     }
                 }
-                TextFormat(string = "037.22")
+                TextFormat(string = "07.22")
             }
         }
     }
