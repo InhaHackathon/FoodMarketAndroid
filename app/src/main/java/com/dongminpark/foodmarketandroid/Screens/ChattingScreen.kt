@@ -36,7 +36,7 @@ fun ChattingScreen(navController: NavController) {
             elevation = 4.dp
         )
         LazyColumn(modifier = Modifier.padding(1.dp)) {
-            items(count = 15) {
+            items(count = 1) {
                 ChattingFormat(navController = navController)
             }
         }
