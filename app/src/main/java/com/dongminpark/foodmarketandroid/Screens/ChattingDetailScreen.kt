@@ -47,21 +47,11 @@ fun ChattingChattingDetailScreen(navController: NavController, route: String) {
     )
     val chatMessages = remember {
         listOf(
-            ChatMessage("other", "안녕하세요 물품 구매하고싶어서 연락드렸어요", "10:00 AM"),
-            ChatMessage("me", "네 안녕하세요", "10:01 AM"),
-            ChatMessage("other", "사용감 있나요? 좀 깎아주세요", "10:02 AM"),
-            ChatMessage("me", "네고 안됩니다.", "10:03 AM"),
-            ChatMessage("other", "그건 너무 비싸네요", "10:03 AM"),
-            ChatMessage("other", "안녕하세요 물품 구매하고싶어서 연락드렸어요", "10:00 AM"),
-            ChatMessage("me", "네 안녕하세요", "10:01 AM"),
-            ChatMessage("other", "사용감 있나요? 좀 깎아주세요", "10:02 AM"),
-            ChatMessage("me", "네고 안됩니다.", "10:03 AM"),
-            ChatMessage("other", "그건 너무 비싸네요", "10:03 AM"),
-            ChatMessage("other", "안녕하세요 물품 구매하고싶어서 연락드렸어요", "10:00 AM"),
-            ChatMessage("me", "네 안녕하세요", "10:01 AM"),
-            ChatMessage("other", "사용감 있나요? 좀 깎아주세요", "10:02 AM"),
-            ChatMessage("me", "네고 안됩니다.", "10:03 AM"),
-            ChatMessage("other", "그럼 너무 비싸네요", "10:03 AM"),
+            ChatMessage("me", "안녕하세요 물품 구매하고싶어서 연락드렸어요", "10:00 AM"),
+            ChatMessage("other", "네 안녕하세요", "10:01 AM"),
+            ChatMessage("me", "좀 깎아주세요", "10:02 AM"),
+            ChatMessage("other", "네고 안됩니다.", "10:03 AM"),
+            ChatMessage("me", "생각해보고 말씀드릴게요", "10:03 AM"),
         )
     }
 
@@ -111,13 +101,13 @@ fun ChattingChattingDetailScreen(navController: NavController, route: String) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.Top
                     ) {
-                        ImageFormat(url = R.drawable.ic_launcher_foreground.toString(), size = 60)
+                        ImageFormat(url = "https://i.ibb.co/rK9mD4L/image.jpg", size = 60)
                         Column(
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
                         ) {
-                            TextFormat(string = "상품 이름", size = 24)
+                            TextFormat(string = "신라면 컵라면", size = 24)
                             Spacer(modifier = Modifier.padding(4.dp))
-                            TextFormat(string = "가격", size = 16)
+                            TextFormat(string = "800원", size = 16)
                         }
                     }
                 }

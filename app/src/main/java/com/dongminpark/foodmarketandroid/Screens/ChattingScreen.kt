@@ -36,8 +36,14 @@ fun ChattingScreen(navController: NavController) {
             elevation = 4.dp
         )
         LazyColumn(modifier = Modifier.padding(1.dp)) {
-            items(count = 1) {
+            item{
                 ChattingFormat(navController = navController)
+            }
+            item{
+                ChattingFormat1(navController = navController)
+            }
+            item{
+                ChattingFormat2(navController = navController)
             }
         }
     }
@@ -65,16 +71,90 @@ fun ChattingFormat(navController: NavController){
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.Top
                 ) {
-                    ImageFormat(url = R.drawable.ic_launcher_foreground.toString(), size = 60)
+                    ImageFormat(url = "https://i.ibb.co/rK9mD4L/image.jpg", size = 60)
                     Column(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
                     ) {
                         TextFormat(string = "한관희", size = 20)
                         Spacer(modifier = Modifier.padding(4.dp))
-                        TextFormat(string = "그럼 너무 비싸네요", size = 16)
+                        TextFormat(string = "생각해보고 말씀드릴게요", size = 16)
                     }
                 }
-                TextFormat(string = "07.22")
+                TextFormat(string = "07.15")
+            }
+        }
+    }
+}
+
+@Composable
+fun ChattingFormat1(navController: NavController){
+    // 상대 사진, 이름, 채팅 보낸 날짜, 최근 한마디
+    Box(modifier = Modifier.padding(4.dp)){
+        Button(
+            modifier = Modifier
+                .shadow(0.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(24.dp)),
+            onClick = {
+                navController.navigate("chatting_detail_detail_screen")
+            }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                contentAlignment = Alignment.BottomEnd,
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.Top
+                ) {
+                    ImageFormat(url = "https://i.ibb.co/Kw15Vzn/image.jpg", size = 60)
+                    Column(
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
+                    ) {
+                        TextFormat(string = "코코", size = 20)
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        TextFormat(string = "내일 저녁은 어때요?", size = 16)
+                    }
+                }
+                TextFormat(string = "07.14")
+            }
+        }
+    }
+}
+
+@Composable
+fun ChattingFormat2(navController: NavController){
+    // 상대 사진, 이름, 채팅 보낸 날짜, 최근 한마디
+    Box(modifier = Modifier.padding(4.dp)){
+        Button(
+            modifier = Modifier
+                .shadow(0.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(24.dp)),
+            onClick = {
+                navController.navigate("chatting_detail_detail_screen")
+            }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                contentAlignment = Alignment.BottomEnd,
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.Top
+                ) {
+                    ImageFormat(url = "https://i.ibb.co/17ffmVq/image.jpg", size = 60)
+                    Column(
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 0.dp),
+                    ) {
+                        TextFormat(string = "석현쨩", size = 20)
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        TextFormat(string = "저도 좋아요~", size = 16)
+                    }
+                }
+                TextFormat(string = "07.15")
             }
         }
     }

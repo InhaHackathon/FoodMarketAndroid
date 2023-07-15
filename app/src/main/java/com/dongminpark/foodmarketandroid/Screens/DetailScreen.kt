@@ -25,6 +25,7 @@ import com.dongminpark.foodmarketandroid.Button.BackButton
 import com.dongminpark.foodmarketandroid.Format.ImageFormat
 import com.dongminpark.foodmarketandroid.Format.TextFormat
 import com.dongminpark.foodmarketandroid.Model.Board
+import com.dongminpark.foodmarketandroid.Model.DetailInfo
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -39,7 +40,7 @@ import com.dongminpark.projectgd.Button.FavoriteButton
 var testString =
     "이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용 이런내용 저런내용 요론내용 조론내용이런내용 저런내용 요론내용 조론내용"
 
-lateinit var board: Board
+lateinit var detailInfo: DetailInfo
 
 @Composable
 fun DetailScreen(navController: NavController, route: String, boardId: Int) {
@@ -53,7 +54,7 @@ fun DetailScreen(navController: NavController, route: String, boardId: Int) {
             completion = { responseState, responseBody ->
                 when (responseState) {
                     RESPONSE_STATE.OKAY -> {
-                        board = responseBody!!
+                        detailInfo = responseBody!!
                         Log.d(TAG, "api 호출 성공")
                         isOkay = true
                     }
@@ -75,7 +76,7 @@ fun DetailScreen(navController: NavController, route: String, boardId: Int) {
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.TopStart
                 ) {
-                    PostUi(images = arrayListOf("1", "2", "3", "4"))
+                    PostUi(images = arrayListOf(detailInfo.productImg))
                     BackButton(navController = navController)
                 }
 
@@ -86,16 +87,16 @@ fun DetailScreen(navController: NavController, route: String, boardId: Int) {
                             modifier = Modifier
                                 .clickable {
                                     // 프로필 창으로 이동
-                                    navController.navigate(route + "_profile_screen")
+                                    navController.navigate(route + "_profile_screen/${detailInfo.userId}")
                                 }
                                 .padding(vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ImageFormat(url = "", size = 80)
+                            ImageFormat(url = detailInfo.profileImgUrl, size = 80)
                             Spacer(modifier = Modifier.width(10.dp))
                             Column() {
-                                TextFormat(string = "박동민", size = 24)
-                                TextFormat(string = "연무동", size = 16, weight = FontWeight.Light)
+                                TextFormat(string = detailInfo.name, size = 24)
+                                TextFormat(string = "용현동", size = 16, weight = FontWeight.Light)
                             }
 
                         }
@@ -105,7 +106,7 @@ fun DetailScreen(navController: NavController, route: String, boardId: Int) {
                                 .padding(10.dp),
                             contentAlignment = Alignment.BottomEnd
                         ) {
-                            TextFormat(string = "2일 남음", size = 20)
+                            TextFormat(string = detailInfo.expirationDate, size = 20)
                         }
                     }
 
@@ -119,13 +120,13 @@ fun DetailScreen(navController: NavController, route: String, boardId: Int) {
                     )
                     Spacer(modifier = Modifier.padding(vertical = 8.dp))
                     // 내용
-                    TextFormat(string = testString, size = 16, weight = FontWeight.Light)
+                    TextFormat(string = detailInfo.description, size = 16, weight = FontWeight.Light)
 
                     Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
 
-                        FavoriteButton(like = true, postNum = 1, count = 30)
+                        FavoriteButton(like = detailInfo.isLike, postNum = detailInfo.boardId, count = detailInfo.likeCount)
 
                         Spacer(modifier = Modifier.padding(8.dp))
 
@@ -138,7 +139,7 @@ fun DetailScreen(navController: NavController, route: String, boardId: Int) {
 
                         Spacer(modifier = Modifier.padding(4.dp))
 
-                        TextFormat(string = "7000원", size = 20)
+                        TextFormat(string = detailInfo.price.toString() + "원", size = 20)
 
                         Box(
                             modifier = Modifier

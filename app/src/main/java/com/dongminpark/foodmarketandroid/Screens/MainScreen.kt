@@ -57,6 +57,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 val boards = arrayListOf<Board>()
+val searchboards = arrayListOf<Board>()
 
 @OptIn(ExperimentalComposeUiApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -223,7 +224,7 @@ fun MainScreen(navController: NavController) {
                         onClick = {
                             RetrofitManager.instance.boardCreate(
                                 nametext ,
-                                "urls", // 수정 필요. selectedPhotos의 값을 구분자를 넣어 string하나로 넣기.
+                                "https://i.ibb.co/202z1kw/image.jpg", // 수정 필요. selectedPhotos의 값을 구분자를 넣어 string하나로 넣기.
                                 selectedDate.toString(),
                                 pricetext.toInt(),
                                 explaintext,
@@ -274,6 +275,7 @@ fun MainScreen(navController: NavController) {
     val keyboardController = LocalSoftwareKeyboardController.current
     var loading by rememberSaveable{ mutableStateOf(true) }
     var isOkay by rememberSaveable{ mutableStateOf(false) }
+    var search by rememberSaveable{ mutableStateOf(false) }
 
     if (loading){
         loading = false
@@ -312,13 +314,24 @@ fun MainScreen(navController: NavController) {
                             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                             keyboardActions = KeyboardActions(onSend = {
                                 keyboardController?.hide()
-                                // 검색 api
+                                RetrofitManager.instance.boardSearch(searchText, completion = { responseState, resposeBody ->
+                                    when (responseState) {
+                                        RESPONSE_STATE.OKAY -> {
+                                            searchboards.addAll(resposeBody!!)
+                                            Log.d(TAG, "MainScreen: examples load success")
+                                        }
+                                        RESPONSE_STATE.FAIL -> {
+                                            Toast.makeText(App.instance, MESSAGE.ERROR, Toast.LENGTH_SHORT).show()
+                                            Log.d(TAG, "MainScreen: main list load Error")
+                                        }
+                                    }
+                                })
                             })
                         ) {
                             searchText = it
                         }
                     } else {
-                        TextFormat(string = "연무동", size = 24)
+                        TextFormat(string = "용현동", size = 24)
                     }
                 },
                 actions = {
@@ -348,10 +361,20 @@ fun MainScreen(navController: NavController) {
                 },
                 elevation = 4.dp
             )
-            // 버튼으로 만들고, 해당 정보를 매개변수로 넘기기.
-            LazyColumn(modifier = Modifier.padding(1.dp)) {
-                items(count = boards.size) {
-                    ItemFormat(navController, "main", board = boards[it])
+
+            if (!search) {
+                // 버튼으로 만들고, 해당 정보를 매개변수로 넘기기.
+                LazyColumn(modifier = Modifier.padding(1.dp)) {
+                    items(count = boards.size) {
+
+                            ItemFormat(navController, "main", board = boards[it])
+                    }
+                }
+            }else{
+                LazyColumn(modifier = Modifier.padding(1.dp)) {
+                    items(count = searchboards.size) {
+                        ItemFormat(navController, "main", board = searchboards[it])
+                    }
                 }
             }
         }

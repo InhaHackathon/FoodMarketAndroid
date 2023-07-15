@@ -17,12 +17,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.dongminpark.foodmarketandroid.Model.FoodBank
 import com.dongminpark.foodmarketandroid.R
 import com.dongminpark.foodmarketandroid.Utils.Constant.Companion.outlinePadding
 import com.dongminpark.foodmarketandroid.ui.theme.Point
 
 @Composable
-fun FoodBankItemFormat(content: () -> Unit) {
+fun FoodBankItemFormat(foodBank: FoodBank, content: () -> Unit) {
     Box(modifier = Modifier.padding(4.dp)){
         Row(
             modifier = Modifier
@@ -34,15 +35,15 @@ fun FoodBankItemFormat(content: () -> Unit) {
         ) {
             Column() {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    TextFormat(string = "지점명", size = 24)
+                    TextFormat(string = foodBank.name, size = 24)
                     Spacer(modifier = Modifier.padding(4.dp))
                     Icon(Icons.Default.LocationOn, contentDescription = "location")
-                    TextFormat(string = "1.2km", size = 12)
+                    TextFormat(string = distanceCalc(foodBank.directDistance), size = 12)
                 }
                 Spacer(modifier = Modifier.padding(4.dp))
-                TextFormat(string = "주소 : 수원시 장안구 연무동 62-6 202호", size = 14)
+                TextFormat(string = "주소 : ${foodBank.address}", size = 14)
                 Spacer(modifier = Modifier.padding(4.dp))
-                TextFormat(string = "전화번호 : 010-2245-3683", size = 14)
+                TextFormat(string = "전화번호 : ${foodBank.tel}", size = 14)
             }
             Box(
                 modifier = Modifier
@@ -61,15 +62,6 @@ fun FoodBankItemFormat(content: () -> Unit) {
             }
         }
     }
-
-
-    /*
-    Divider(
-        color = MaterialTheme.colors.secondaryVariant,
-        modifier = Modifier
-            .height(1.dp)
-            .fillMaxWidth()
-    )
-
-     */
 }
+
+fun distanceCalc(len: Double) = (len/1000).toInt().toString() + if((len / 1000 * 100).toInt() == 0) "Km" else  ".${(len % 1000 / 100).toInt()}Km"

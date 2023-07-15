@@ -128,7 +128,7 @@ fun LoginScreen(navController: NavHostController) {
                             googleLogin()
                         }
                         .padding(10.dp)
-                        .width(200.dp),
+                        .width(240.dp),
                     tint = Color.Unspecified
                 )
             }
@@ -166,7 +166,7 @@ fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
             }
             else{
                 isLoginLoading = false
-                Toast.makeText(App.instance, MESSAGE.ERROR, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(App.instance, MESSAGE.ERROR, Toast.LENGTH_SHORT).show()
                 Log.e("에러 : ", "${task.exception}")
                 Log.e("Firebase ERROR", "먼가 먼가 잘못됨")
             }

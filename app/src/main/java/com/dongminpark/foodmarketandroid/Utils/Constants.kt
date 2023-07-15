@@ -31,6 +31,10 @@ object API{
     const val BOARD_UPDATE_BOARDID = "/board/update/{boardId}"
     const val BOARD_USER_USERID = "/board/user/{userId}"
     const val BOARD_USER_MYPAGE = "/board/user/mypage"
+    const val BOARD_SEARCH = "/board/search"
+
+    // FoodBank
+    const val FOODBANK_LIST = "/foodbank/list"
 
     // Likes
     const val LIKE_BOARDID = "/like/{boardId}" // 취소랑 좋아요랑 양식이 같음. 호출할때 다르게?

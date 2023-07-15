@@ -18,5 +18,9 @@ class Chatting{
                 ChatMessage("other", "그건 너무 비싸네요", "10:03 AM"),
             )
 
+        var Name = ""
+        var Latitude = 37.3450775
+        var Longitude = 126.654308
+
     }
 }

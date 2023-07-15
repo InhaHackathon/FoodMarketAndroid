@@ -22,14 +22,21 @@ interface IRetrofit {
     @GET(API.BOARD_LIST_BOARDID)
     fun boardListBoardId(@Path("boardId") boardId: Int): Call<JsonElement>
 
+    @GET(API.BOARD_SEARCH)
+    fun boardSearch(@Query("keyword") keyword: String): Call<JsonElement>
+
     @POST(API.BOARD_UPDATE_BOARDID)
     fun boardUpdateBoardId(@Path("boardId") boardId: Int) : Call<JsonElement>
 
     @GET(API.BOARD_USER_USERID)
-    fun boardUserUserId(@Path("userdId") userId: Int): Call<JsonElement>
+    fun boardUserUserId(@Path("userId") userId: Int): Call<JsonElement>
 
     @GET(API.BOARD_USER_MYPAGE)
     fun boardUserMypage(): Call<JsonElement>
+
+    // FoodBank
+    @POST(API.FOODBANK_LIST)
+    fun foodbankList(@Body location: JsonObject) : Call<JsonElement>
 
     // Like
     @GET(API.LIKE_BOARDID)
@@ -42,7 +49,7 @@ interface IRetrofit {
     fun likeListUserId(@Path("userId") userId: Int) : Call<JsonElement>
 
     // User
-    @DELETE(API.USER_USERID)
+    @GET(API.USER_USERID)
     fun userUserId(@Path("userId") userId: Int): Call<JsonElement>
 
     @DELETE(API.USER_DELETE_USERID)

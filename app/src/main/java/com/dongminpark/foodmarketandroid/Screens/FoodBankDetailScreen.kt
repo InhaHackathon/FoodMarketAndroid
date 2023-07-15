@@ -19,6 +19,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dongminpark.foodmarketandroid.Button.BackButton
+import com.dongminpark.foodmarketandroid.Chatting
 import com.dongminpark.foodmarketandroid.R
 import com.skt.Tmap.TMapMarkerItem
 import com.skt.Tmap.TMapPoint
@@ -33,7 +34,7 @@ fun FoodBankDetailScreen(navController: NavController) {
             },
             title = {
                 Text(
-                    text = "팔도푸드뱅크",
+                    text = Chatting.Name,
                 ) // 텍스트 API로 받아와서 할 예정
             },
             elevation = 4.dp
@@ -49,11 +50,11 @@ fun TmapView() {
 
     AndroidView(factory = { tMapView })
 
-    val centerLatitude = 37.2975248664509 // 내 위치
-    val centerLongitude = 127.03594482989078 // 내 위치
+    val centerLatitude = 37.45086140839723 // 내 위치
+    val centerLongitude = 126.65434232805298 // 내 위치
 
-    val centerLatitude2 = 37.29017781822823 // 목표 위치
-    val centerLongitude2 = 127.00305619761924 //목표 위치
+    val centerLatitude2 = Chatting.Latitude // 목표 위치
+    val centerLongitude2 = Chatting.Longitude //목표 위치
 
     LaunchedEffect(tMapView) {
         tMapView.setSKTMapApiKey("mpqOluGuKn4C1DszIeY9Z33DCyl4BhPR6DGHaQT9")

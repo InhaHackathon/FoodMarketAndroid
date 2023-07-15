@@ -116,7 +116,17 @@ fun MainScreenView(startDestination: String) {
                         boardId = variable!!
                     )
                 }
-                composable(MainNavigationScreens.Profile.route) { ProfileScreen(navController = navController, "main")}
+                composable(
+                    route = "${MainNavigationScreens.Profile.route}/{variable}",
+                    arguments = listOf(navArgument("variable") { type = NavType.IntType })
+                ) { entry ->
+                    val variable = entry.arguments?.getInt("variable")
+                    ProfileScreen(
+                        navController = navController,
+                        route = "main",
+                        userId = variable!!
+                    )
+                }
                 composable(MainNavigationScreens.Chatting.route) { ChattingChattingDetailScreen(navController = navController, "main") }
 
                 // Chatting

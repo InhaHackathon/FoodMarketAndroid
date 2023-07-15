@@ -30,6 +30,7 @@ import com.dongminpark.foodmarketandroid.Utils.RESPONSE_STATE
 @Composable
 fun FavoriteButton(like: Boolean, postNum: Int, count: Int, size: Int = 26){
     var isFavorite by rememberSaveable { mutableStateOf(like) }
+    var likeCount by rememberSaveable { mutableStateOf(count) }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
@@ -46,6 +47,7 @@ fun FavoriteButton(like: Boolean, postNum: Int, count: Int, size: Int = 26){
                                 when (responseState) {
                                     RESPONSE_STATE.OKAY -> {
                                         isFavorite = !isFavorite
+                                        likeCount--
                                     }
                                     RESPONSE_STATE.FAIL -> {
                                         Toast.makeText(
@@ -63,6 +65,7 @@ fun FavoriteButton(like: Boolean, postNum: Int, count: Int, size: Int = 26){
                                 when (responseState) {
                                     RESPONSE_STATE.OKAY -> {
                                         isFavorite = !isFavorite
+                                        likeCount++
                                     }
                                     RESPONSE_STATE.FAIL -> {
                                         Toast
@@ -80,6 +83,6 @@ fun FavoriteButton(like: Boolean, postNum: Int, count: Int, size: Int = 26){
                 },
             tint = Color.Unspecified
         )
-        TextFormat(string = count.toString(), size = 12)
+        TextFormat(string = likeCount.toString(), size = 12)
     }
 }
